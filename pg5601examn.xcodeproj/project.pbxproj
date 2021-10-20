@@ -103,11 +103,11 @@
 		9B91CB8A27201DC500FB5001 /* pg5601examn */ = {
 			isa = PBXGroup;
 			children = (
+				9B91CB8B27201DC500FB5001 /* AppDelegate.swift */,
+				9B91CB8D27201DC500FB5001 /* SceneDelegate.swift */,
 				9B91CBBB27201E7900FB5001 /* Model */,
 				9B91CBBD27201E8C00FB5001 /* View */,
 				9B91CBBC27201E8300FB5001 /* Controller */,
-				9B91CB8B27201DC500FB5001 /* AppDelegate.swift */,
-				9B91CB8D27201DC500FB5001 /* SceneDelegate.swift */,
 				9B91CB9427201DC900FB5001 /* Assets.xcassets */,
 				9B91CB9627201DC900FB5001 /* LaunchScreen.storyboard */,
 				9B91CB9927201DC900FB5001 /* Info.plist */,
