@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B8B26D4272169AE00927B9A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B26D3272169AE00927B9A /* UserModel.swift */; };
 		9B91CB8C27201DC500FB5001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CB8B27201DC500FB5001 /* AppDelegate.swift */; };
 		9B91CB8E27201DC500FB5001 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CB8D27201DC500FB5001 /* SceneDelegate.swift */; };
 		9B91CB9027201DC500FB5001 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CB8F27201DC500FB5001 /* ViewController.swift */; };
@@ -17,7 +18,7 @@
 		9B91CBAD27201DC900FB5001 /* pg5601examnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CBAC27201DC900FB5001 /* pg5601examnUITests.swift */; };
 		9B91CBAF27201DC900FB5001 /* pg5601examnUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CBAE27201DC900FB5001 /* pg5601examnUITestsLaunchTests.swift */; };
 		9B91CBBF2720213300FB5001 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CBBE2720213300FB5001 /* UserManager.swift */; };
-		9B91CBC1272024CF00FB5001 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CBC0272024CF00FB5001 /* UserData.swift */; };
+		9B91CBC1272024CF00FB5001 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B91CBC0272024CF00FB5001 /* Users.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B8B26D3272169AE00927B9A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		9B91CB8827201DC500FB5001 /* pg5601examn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pg5601examn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B91CB8B27201DC500FB5001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B91CB8D27201DC500FB5001 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,7 +54,7 @@
 		9B91CBAC27201DC900FB5001 /* pg5601examnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pg5601examnUITests.swift; sourceTree = "<group>"; };
 		9B91CBAE27201DC900FB5001 /* pg5601examnUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pg5601examnUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9B91CBBE2720213300FB5001 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		9B91CBC0272024CF00FB5001 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		9B91CBC0272024CF00FB5001 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				9B91CBBE2720213300FB5001 /* UserManager.swift */,
-				9B91CBC0272024CF00FB5001 /* UserData.swift */,
+				9B91CBC0272024CF00FB5001 /* Users.swift */,
+				9B8B26D3272169AE00927B9A /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -291,7 +294,8 @@
 				9B91CB9027201DC500FB5001 /* ViewController.swift in Sources */,
 				9B91CB8C27201DC500FB5001 /* AppDelegate.swift in Sources */,
 				9B91CBBF2720213300FB5001 /* UserManager.swift in Sources */,
-				9B91CBC1272024CF00FB5001 /* UserData.swift in Sources */,
+				9B91CBC1272024CF00FB5001 /* Users.swift in Sources */,
+				9B8B26D4272169AE00927B9A /* UserModel.swift in Sources */,
 				9B91CB8E27201DC500FB5001 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
