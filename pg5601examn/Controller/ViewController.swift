@@ -7,33 +7,45 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let userManager = UserManager()
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UserManagerDelegate {
+    var userManager = UserManager()
     
-    let myData = ["1", "2", "3", "4", "5"]
+    var users = [UserModel]()
     
     @IBOutlet weak var userTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        userManager.fetchAllUsers()
+        
         
         let nib = UINib(nibName: "UserTableViewCell", bundle: nil)
         userTableView.register(nib, forCellReuseIdentifier: "UserTableViewCell")
         userTableView.delegate = self
         userTableView.dataSource = self
+        userManager.delegate = self
+        userManager.fetchAllUsers()
     }
     
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserModel]) {
+        self.users = userData
+        print("DIDRUN")
+        DispatchQueue.main.async {
+            self.userTableView.reloadData()
+        }
+        
+    }
+
     // Returning 100 rows in a section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myData.count
+        print(users.count)
+        return users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
-        cell.cellLabel.text = myData[indexPath.row]
-        cell.cellImage.backgroundColor = .blue
+        cell.cellLabel.text = "\(users[indexPath.row].firstName) \(users[indexPath.row].lastName)"
+        cell.cellImage.image = users[indexPath.row].picture
         return cell
     }
     

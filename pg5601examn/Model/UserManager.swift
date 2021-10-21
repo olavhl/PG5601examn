@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import UIKit
+
+protocol UserManagerDelegate {
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserModel])
+}
 
 struct UserManager {
     let baseUrl = "https://randomuser.me/api/?results=100&nat=no"
+    var delegate: UserManagerDelegate?
     
     func fetchAllUsers() {
         performRequest(with: baseUrl)
@@ -22,11 +28,25 @@ struct UserManager {
                     print(error!)
                     return
                 }
-                print(fetchJSON(data!))
+                if let safeData = data {
+                    if let userData = fetchJSON(safeData) {
+                        self.delegate?.didUpdateUserList(self, userData: userData)
+                    }
+                }
+                //                print(fetchJSON(data!))
             }
             
             task.resume()
         }
+    }
+    
+    func fetchImage(url: URL) -> UIImage? {
+        if let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) {
+                return image
+            }
+        }
+        return nil
     }
     
     func fetchJSON(_ data: Data) -> [UserModel]? {
@@ -34,20 +54,29 @@ struct UserManager {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
             
+            
             var users: [UserModel] = []
             
             for user in userResults {
                 let firstName = user.name.first
                 let lastName = user.name.last
-                let picture = user.picture.large
                 let email = user.email
                 let birthDate = user.dob.date
                 let phoneNumber = user.cell
                 let city = user.location.city
                 let coordinateLatitude = user.location.coordinates.latitude
                 let coordinateLongitude = user.location.coordinates.longitude
+                var picture: UIImage?
                 
-                let implementedUser = UserModel(firstName: firstName, lastName: lastName, picture: picture, email: email, birthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+                if let imageUrl = URL(string: user.picture.large) {
+                    if let image = fetchImage(url: imageUrl) {
+                        picture = image
+                    }
+                } 
+
+                
+                // TODO: Need to fix this nil-check of picture
+                let implementedUser = UserModel(firstName: firstName, lastName: lastName, picture: picture!, email: email, birthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
                 
                 users.append(implementedUser)
             }
@@ -58,7 +87,7 @@ struct UserManager {
             return nil
         }
         
-
+        
     }
-
+    
 }
