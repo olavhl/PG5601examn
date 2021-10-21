@@ -19,6 +19,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         userManager.fetchAllUsers()
         
+        let nib = UINib(nibName: "UserTableViewCell", bundle: nil)
+        userTableView.register(nib, forCellReuseIdentifier: "UserTableViewCell")
         userTableView.delegate = self
         userTableView.dataSource = self
     }
@@ -29,8 +31,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = myData[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+        cell.cellLabel.text = myData[indexPath.row]
+        cell.cellImage.backgroundColor = .blue
         return cell
     }
     
