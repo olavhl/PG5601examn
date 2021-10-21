@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct Users: Codable {
+    let results: [UserData]
+}
+
 struct UserData: Codable {
     let name: Name
     let picture: Picture
@@ -31,7 +35,7 @@ struct Dob: Codable {
 
 struct Location: Codable {
     let city: String // results[0].location.city
-    let coordinates: String
+    let coordinates: Coordinates
 }
 
 struct Coordinates: Codable {
