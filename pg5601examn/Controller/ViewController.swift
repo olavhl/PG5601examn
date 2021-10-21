@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UserManagerDelegate {
+class ViewController: UIViewController {
     var userManager = UserManager()
     
     var users = [UserModel]()
@@ -27,6 +27,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         userManager.fetchAllUsers()
     }
     
+}
+
+//MARK: - UserManagerDelegate
+extension  ViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserModel]) {
         self.users = userData
         print("DIDRUN")
@@ -35,7 +39,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
     }
+}
 
+//MARK: - UITableViewDelegate & UITableViewDataSource
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // Returning 100 rows in a section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(users.count)
@@ -49,5 +56,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showUserDetails", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? UserDetailsViewController {
+            destination.user = users[userTableView.indexPathForSelectedRow!.row]
+        }
+    }
 }
-
