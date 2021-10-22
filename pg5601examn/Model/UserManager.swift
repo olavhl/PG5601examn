@@ -76,7 +76,7 @@ struct UserManager {
 
                 
                 // TODO: Need to fix this nil-check of picture
-                let implementedUser = UserModel(firstName: firstName, lastName: lastName, picture: picture!, email: email, birthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+                let implementedUser = UserModel(firstName: firstName, lastName: lastName, picture: picture!, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
                 
                 users.append(implementedUser)
             }
