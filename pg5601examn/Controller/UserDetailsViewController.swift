@@ -10,14 +10,31 @@ import UIKit
 class UserDetailsViewController: UIViewController {
     
     @IBOutlet weak var userDetailsImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var birthLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var phoneNumberLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    
     
     var user: UserModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        userNameLabel.text = user?.firstName
+        
+        firstNameLabel.text = user?.firstName
+        lastNameLabel.text = user?.lastName
+        ageLabel.text = user?.age
+        birthLabel.text = user?.birthDate
+        emailLabel.text = user?.email
+        phoneNumberLabel.text = user?.phoneNumber
+        cityLabel.text = user?.city
+        
+//        userNameLabel.text = user?.birthDate
+//        test.text = user?.age
         userDetailsImageView.image = user?.picture
         // Do any additional setup after loading the view.
     }

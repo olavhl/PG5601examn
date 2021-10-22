@@ -20,6 +20,7 @@ struct UserModel {
     let coordinateLatitude: String
     let coordinateLongitude: String
     
+    // Computed values to get the exact values needed
     var birthDate: String {
         let splitDOBIntoArray = entireBirthDate.split(separator: "T")
         return String(splitDOBIntoArray[0])
