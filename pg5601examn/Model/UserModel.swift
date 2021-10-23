@@ -10,9 +10,10 @@ import UIKit
 
 // Implementing a new Model to be able to have my own namings for the objects
 struct UserModel {
+    let id: String
     let firstName: String
     let lastName: String
-    let picture: UIImage
+    let pictureUrl: String
     let email: String
     let entireBirthDate: String
     let phoneNumber: String
@@ -36,5 +37,23 @@ struct UserModel {
         
         
         return String(ageCalculation)
+    }
+    
+    var picture: UIImage? {
+        if let imageUrl = URL(string: pictureUrl) {
+            if let image = fetchImage(url: imageUrl) {
+                return image
+            }
+        }
+        return nil
+    }
+    
+    func fetchImage(url: URL) -> UIImage? {
+        if let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) {
+                return image
+            }
+        }
+        return nil
     }
 }

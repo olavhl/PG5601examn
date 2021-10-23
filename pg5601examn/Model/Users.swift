@@ -12,12 +12,17 @@ struct Users: Codable {
 }
 
 struct UserData: Codable {
+    let id: Id
     let name: Name
     let picture: Picture
     let email: String // results[0].email
     let dob: Dob
     let cell: String // results[0].cell
     let location: Location
+}
+
+struct Id: Codable {
+    let value: String
 }
 
 struct Name: Codable {

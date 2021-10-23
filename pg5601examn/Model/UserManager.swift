@@ -5,7 +5,7 @@
 //  Created by Olav Hartwedt Larsen on 20/10/2021.
 //
 
-import Foundation
+import CoreData
 import UIKit
 
 protocol UserManagerDelegate {
@@ -15,6 +15,8 @@ protocol UserManagerDelegate {
 struct UserManager {
     let baseUrl = "https://randomuser.me/api/?results=100&nat=no"
     var delegate: UserManagerDelegate?
+    // Accessing context from AppDelegate
+//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func fetchAllUsers() {
         performRequest(with: baseUrl)
@@ -33,31 +35,23 @@ struct UserManager {
                         self.delegate?.didUpdateUserList(self, userData: userData)
                     }
                 }
-                //                print(fetchJSON(data!))
             }
             
             task.resume()
         }
     }
     
-    func fetchImage(url: URL) -> UIImage? {
-        if let data = try? Data(contentsOf: url) {
-            if let image = UIImage(data: data) {
-                return image
-            }
-        }
-        return nil
-    }
-    
     func fetchJSON(_ data: Data) -> [UserModel]? {
         do {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
+//            let userToContext = UserEntity(context: self.context)
             
             
             var users: [UserModel] = []
             
             for user in userResults {
+                let id = user.id.value
                 let firstName = user.name.first
                 let lastName = user.name.last
                 let email = user.email
@@ -66,18 +60,10 @@ struct UserManager {
                 let city = user.location.city
                 let coordinateLatitude = user.location.coordinates.latitude
                 let coordinateLongitude = user.location.coordinates.longitude
-                var picture: UIImage?
+                let pictureUrl = user.picture.large
                 
-                if let imageUrl = URL(string: user.picture.large) {
-                    if let image = fetchImage(url: imageUrl) {
-                        picture = image
-                    }
-                } 
-
-                
-                // TODO: Need to fix this nil-check of picture
-                let implementedUser = UserModel(firstName: firstName, lastName: lastName, picture: picture!, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
-                
+                let implementedUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+//                userToContext.
                 users.append(implementedUser)
             }
             
@@ -86,8 +72,13 @@ struct UserManager {
             print(error)
             return nil
         }
-        
-        
     }
     
+//        func saveUsersToCoreData() {
+//            do {
+//                try context.save()
+//            } catch {
+//                print("Error saving context: \(error)")
+//            }
+//        }
 }

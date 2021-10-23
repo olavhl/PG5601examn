@@ -6,18 +6,20 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     var userManager = UserManager()
-    
     var users = [UserModel]()
+    // Accessing context from AppDelegate
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBOutlet weak var userTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
         let nib = UINib(nibName: "UserTableViewCell", bundle: nil)
         userTableView.register(nib, forCellReuseIdentifier: "UserTableViewCell")
@@ -27,15 +29,23 @@ class ViewController: UIViewController {
         userManager.fetchAllUsers()
     }
     
+    func saveUsers() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
+        }
+    }
+    
 }
 
 //MARK: - UserManagerDelegate
 extension  ViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserModel]) {
         self.users = userData
-        print("DIDRUN")
         DispatchQueue.main.async {
             self.userTableView.reloadData()
+            self.saveUsers()
         }
         
     }
