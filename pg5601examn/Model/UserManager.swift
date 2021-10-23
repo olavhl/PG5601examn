@@ -16,7 +16,7 @@ struct UserManager {
     let baseUrl = "https://randomuser.me/api/?results=100&nat=no"
     var delegate: UserManagerDelegate?
     // Accessing context from AppDelegate
-    //    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func fetchAllUsers() {
         performRequest(with: baseUrl)
@@ -46,7 +46,6 @@ struct UserManager {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
             
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 //            var users: [UserModel] = []
             var userEntityArray: [UserEntity] = []
             
@@ -64,7 +63,7 @@ struct UserManager {
                 
 //                let implementedUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
                 
-                let userEntity = UserEntity(context: context)
+                let userEntity = UserEntity(context: self.context)
                 userEntity.firstName = firstName
                 userEntity.lastName = lastName
                 userEntity.id = id

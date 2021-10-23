@@ -44,8 +44,9 @@ class ViewController: UIViewController {
 extension  ViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
 //        self.users = userData
-        self.userEntityArray = userData
+        
         DispatchQueue.main.async {
+            self.userEntityArray = userData
             self.userTableView.reloadData()
             self.saveUsers()
         }
