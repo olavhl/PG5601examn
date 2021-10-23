@@ -12,8 +12,11 @@ class ViewController: UIViewController {
     var userManager = UserManager()
     var users = [UserModel]()
     var userEntityArray = [UserEntity]()
+    var userEntityFetched = [UserEntity]()
     // Accessing context from AppDelegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    let defaults = UserDefaults.standard
     
     @IBOutlet weak var userTableView: UITableView!
     
@@ -27,14 +30,41 @@ class ViewController: UIViewController {
         userTableView.delegate = self
         userTableView.dataSource = self
         userManager.delegate = self
-        userManager.fetchAllUsers()
+
+        
+        loadUsersFromDB()
+        print(userEntityFetched.count)
+        
+        // TODO: Fix my sqlite file, and convert userEntityFetched to UserModel to display the Users
+        
+        // Using UserDefaults to fetch API only the first time the user is opening the app.
+        if defaults.bool(forKey: "First Launch") == true {
+            print("Second+")
+            defaults.set(true, forKey: "First Launch")
+        } else {
+            userManager.fetchAllUsers()
+            
+            print("First")
+            defaults.set(true, forKey: "First Launch")
+        }
     }
     
-    func saveUsers() {
+    // Saving users to CoreData
+    func saveUsersToDB() {
         do {
             try context.save()
         } catch {
             print("Error saving context: \(error)")
+        }
+    }
+    
+    // Loading users from CoreData
+    func loadUsersFromDB() {
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        do {
+            userEntityFetched = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context: \(error)")
         }
     }
     
@@ -48,7 +78,7 @@ extension  ViewController: UserManagerDelegate {
         DispatchQueue.main.async {
             self.userEntityArray = userData
             self.userTableView.reloadData()
-            self.saveUsers()
+            self.saveUsersToDB()
         }
         
     }
