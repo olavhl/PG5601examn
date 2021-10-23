@@ -30,10 +30,6 @@ class ViewController: UIViewController {
         userTableView.delegate = self
         userTableView.dataSource = self
         userManager.delegate = self
-
-        
-        loadUsersFromDB()
-        print(userEntityFetched.count)
         
         // TODO: Fix my sqlite file, and convert userEntityFetched to UserModel to display the Users
         
@@ -47,6 +43,10 @@ class ViewController: UIViewController {
             print("First")
             defaults.set(true, forKey: "First Launch")
         }
+        
+        loadUsersFromDB()
+        self.users = userManager.convertToUserModel(from: userEntityFetched)
+        print(userEntityFetched.count)
     }
     
     // Saving users to CoreData

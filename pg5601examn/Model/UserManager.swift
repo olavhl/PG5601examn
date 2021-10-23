@@ -45,38 +45,24 @@ struct UserManager {
         do {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
-            
-//            var users: [UserModel] = []
+
             var userEntityArray: [UserEntity] = []
             
             for user in userResults {
-                let id = user.id.value
-                let firstName = user.name.first
-                let lastName = user.name.last
-                let email = user.email
-                let birthDate = user.dob.date
-                let phoneNumber = user.cell
-                let city = user.location.city
-                let coordinateLatitude = user.location.coordinates.latitude
-                let coordinateLongitude = user.location.coordinates.longitude
-                let pictureUrl = user.picture.large
-                
-//                let implementedUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
-                
                 let userEntity = UserEntity(context: self.context)
-                userEntity.firstName = firstName
-                userEntity.lastName = lastName
-                userEntity.id = id
-                userEntity.pictureUrl = pictureUrl
-                userEntity.entireBirthDate = birthDate
-                userEntity.city = city
-                userEntity.phoneNumber = phoneNumber
-                userEntity.coordinateLatitude = coordinateLatitude
-                userEntity.coordinateLongitude = coordinateLongitude
-                userEntity.email = email
+                
+                userEntity.id = user.id.value
+                userEntity.firstName = user.name.first
+                userEntity.lastName = user.name.last
+                userEntity.email = user.email
+                userEntity.entireBirthDate = user.dob.date
+                userEntity.phoneNumber = user.cell
+                userEntity.city = user.location.city
+                userEntity.coordinateLatitude = user.location.coordinates.latitude
+                userEntity.coordinateLongitude = user.location.coordinates.longitude
+                userEntity.pictureUrl = user.picture.large
                 
                 userEntityArray.append(userEntity)
-//                users.append(implementedUser)
             }
             
             return userEntityArray
@@ -84,5 +70,31 @@ struct UserManager {
             print(error)
             return nil
         }
+    }
+    
+    
+    // Method to change the value from entity to UserModel
+    // to make it easier to handle images and computed values
+    func convertToUserModel(from userEntity: [UserEntity]) -> [UserModel] {
+        var users = [UserModel]()
+        
+        for user in userEntity {
+            let id = user.id ?? "1000"
+            let firstName = user.firstName ?? "Ola"
+            let lastName = user.lastName ?? "Nordmann"
+            let email = user.email ?? "ola@nordmann.no"
+            let birthDate = user.entireBirthDate ?? "1949-05-06T10:58:34.005Z"
+            let phoneNumber = user.phoneNumber ?? "91919191"
+            let city = user.city ?? "Oslo"
+            let coordinateLatitude = user.coordinateLatitude ?? "59.920"
+            let coordinateLongitude = user.coordinateLongitude ?? "10.776"
+            let pictureUrl = user.pictureUrl ?? "https://randomuser.me/api/portraits/women/38.jpg"
+            
+            let newUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+            
+            users.append(newUser)
+        }
+        
+        return users
     }
 }
