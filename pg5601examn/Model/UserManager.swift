@@ -9,14 +9,14 @@ import CoreData
 import UIKit
 
 protocol UserManagerDelegate {
-    func didUpdateUserList(_ userManager: UserManager, userData: [UserModel])
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity])
 }
 
 struct UserManager {
     let baseUrl = "https://randomuser.me/api/?results=100&nat=no"
     var delegate: UserManagerDelegate?
     // Accessing context from AppDelegate
-//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    //    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func fetchAllUsers() {
         performRequest(with: baseUrl)
@@ -41,14 +41,14 @@ struct UserManager {
         }
     }
     
-    func fetchJSON(_ data: Data) -> [UserModel]? {
+    func fetchJSON(_ data: Data) -> [UserEntity]? {
         do {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
-//            let userToContext = UserEntity(context: self.context)
             
-            
-            var users: [UserModel] = []
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//            var users: [UserModel] = []
+            var userEntityArray: [UserEntity] = []
             
             for user in userResults {
                 let id = user.id.value
@@ -62,23 +62,28 @@ struct UserManager {
                 let coordinateLongitude = user.location.coordinates.longitude
                 let pictureUrl = user.picture.large
                 
-                let implementedUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
-//                userToContext.
-                users.append(implementedUser)
+//                let implementedUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+                
+                let userEntity = UserEntity(context: context)
+                userEntity.firstName = firstName
+                userEntity.lastName = lastName
+                userEntity.id = id
+                userEntity.pictureUrl = pictureUrl
+                userEntity.entireBirthDate = birthDate
+                userEntity.city = city
+                userEntity.phoneNumber = phoneNumber
+                userEntity.coordinateLatitude = coordinateLatitude
+                userEntity.coordinateLongitude = coordinateLongitude
+                userEntity.email = email
+                
+                userEntityArray.append(userEntity)
+//                users.append(implementedUser)
             }
             
-            return users
+            return userEntityArray
         } catch {
             print(error)
             return nil
         }
     }
-    
-//        func saveUsersToCoreData() {
-//            do {
-//                try context.save()
-//            } catch {
-//                print("Error saving context: \(error)")
-//            }
-//        }
 }

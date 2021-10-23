@@ -11,6 +11,7 @@ import CoreData
 class ViewController: UIViewController {
     var userManager = UserManager()
     var users = [UserModel]()
+    var userEntityArray = [UserEntity]()
     // Accessing context from AppDelegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -41,8 +42,9 @@ class ViewController: UIViewController {
 
 //MARK: - UserManagerDelegate
 extension  ViewController: UserManagerDelegate {
-    func didUpdateUserList(_ userManager: UserManager, userData: [UserModel]) {
-        self.users = userData
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
+//        self.users = userData
+        self.userEntityArray = userData
         DispatchQueue.main.async {
             self.userTableView.reloadData()
             self.saveUsers()
