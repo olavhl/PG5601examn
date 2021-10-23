@@ -252,6 +252,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="DKI-0s-UI4"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mdt-nx-cX1">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -285,7 +286,7 @@
         <!--Map View Controller-->
         <scene sceneID="rXS-yl-WfY">
             <objects>
-                <viewController id="JaZ-4N-sK7" userLabel="Map View Controller" sceneMemberID="viewController">
+                <viewController id="JaZ-4N-sK7" userLabel="Map View Controller" customClass="MapViewController" customModule="pg5601examn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7oA-Hc-1WO">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -314,11 +315,11 @@
             </objects>
             <point key="canvasLocation" x="1648" y="1486"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Settings-->
         <scene sceneID="fs3-ve-GOj">
             <objects>
                 <navigationController id="HuJ-Cg-ofc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" selectedImage="square.and.pencil" catalog="system" systemItem="more" id="Oar-QP-QCf"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="square.and.pencil" catalog="system" selectedImage="square.and.pencil" id="Oar-QP-QCf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zhR-Ij-AZ8">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
