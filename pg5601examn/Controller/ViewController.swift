@@ -39,14 +39,25 @@ class ViewController: UIViewController {
             defaults.set(true, forKey: "First Launch")
         } else {
             userManager.fetchAllUsers()
-            
             print("First")
             defaults.set(true, forKey: "First Launch")
         }
-        
+        launchApplication()
+    }
+}
+
+
+//MARK: - Launch && CoreData
+extension ViewController {
+    // TODO: Need to fix this to work first time
+    func launchApplication() {
         loadUsersFromDB()
-        self.users = userManager.convertToUserModel(from: userEntityFetched)
-        print(userEntityFetched.count)
+        DispatchQueue.main.async {
+            self.users = self.userManager.convertToUserModel(from: self.userEntityFetched)
+            print(self.userEntityFetched.count)
+            self.userTableView.reloadData()
+        }
+        
     }
     
     // Saving users to CoreData
@@ -67,8 +78,8 @@ class ViewController: UIViewController {
             print("Error fetching data from context: \(error)")
         }
     }
-    
 }
+
 
 //MARK: - UserManagerDelegate
 extension  ViewController: UserManagerDelegate {
@@ -77,7 +88,7 @@ extension  ViewController: UserManagerDelegate {
         
         DispatchQueue.main.async {
             self.userEntityArray = userData
-            self.userTableView.reloadData()
+//            self.userTableView.reloadData()
             self.saveUsersToDB()
         }
         
@@ -88,7 +99,7 @@ extension  ViewController: UserManagerDelegate {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // Returning 100 rows in a section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(users.count)
+//        print(users.count)
         return users.count
     }
     
