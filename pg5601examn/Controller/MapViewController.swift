@@ -32,28 +32,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         createCustomPins()
         
         map.showAnnotations(customPins, animated: false)
-        
-//        addUserToAnnotations(users: users)
     }
     
     
     func createCustomPins() {
         for user in users {
-            let pin = CustomPin(title: user.firstName, coordinates: user.coordinates)
+            let pin = CustomPin(title: user.id, coordinates: user.coordinates)
             customPins.append(pin)
         }
     }
     
-//    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-//        mapView.dequeueReusableAnnotationView(withIdentifier: "custom")
-//        for user in users {
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = CLLocationCoordinate2D(latitude: Double(user.coordinateLatitude)!, longitude: Double(user.coordinateLongitude)!)
-//            for view in views {
-//                view.image = user.picture
-//            }
-//        }
-//    }
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        for view in views {
+            if let currentUser = users.first(where: {$0.id == view.annotation?.title}) {
+                view.image = currentUser.picture
+                
+            }
+//            view.image = users[index].picture
+        }
+    }
 
     // Loading users from CoreData
     func loadUsersFromDB() {
