@@ -7,9 +7,15 @@
 
 import UIKit
 import MapKit
+import CoreData
 import CoreLocation
 
 class MapViewController: UIViewController, MKMapViewDelegate {
+    var userConverter = UserConverter()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var users = [UserModel]()
+    var usersEntity = [UserEntity]()
+    var customPins = [MKAnnotation]()
     
     let map = MKMapView()
     // Temporary NY coordinate
@@ -18,55 +24,46 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadUsersFromDB()
+        
         view.addSubview(map)
         map.frame = view.bounds
-        
-        // The span is zooming into the coordinate
-        map.setRegion(MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)), animated: false)
-        
         map.delegate = self
+        createCustomPins()
         
-        addCustomPin()
-    }
-    
-    private func addCustomPin() {
-        let pin = MKPointAnnotation()
-        pin.coordinate = coordinate
-        pin.title = "Jonny"
-        pin.subtitle = "Bigboy"
-        map.addAnnotation(pin)
+        map.showAnnotations(customPins, animated: false)
+        
+//        addUserToAnnotations(users: users)
     }
     
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        // Making sure its not the users location
-        guard !(annotation is MKUserLocation) else {
-            return nil
+    func createCustomPins() {
+        for user in users {
+            let pin = CustomPin(title: user.firstName, coordinates: user.coordinates)
+            customPins.append(pin)
         }
-        
-        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
-        
-        if annotationView == nil {
-            // create the view
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
-        annotationView?.image = UIImage(systemName: "square.and.pencil")
-        
-        return annotationView
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+//    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+//        mapView.dequeueReusableAnnotationView(withIdentifier: "custom")
+//        for user in users {
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = CLLocationCoordinate2D(latitude: Double(user.coordinateLatitude)!, longitude: Double(user.coordinateLongitude)!)
+//            for view in views {
+//                view.image = user.picture
+//            }
+//        }
+//    }
+
+    // Loading users from CoreData
+    func loadUsersFromDB() {
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        do {
+            usersEntity = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context: \(error)")
+        }
+        users = userConverter.convertToUserModel(from: usersEntity)
+        
+    }
 }

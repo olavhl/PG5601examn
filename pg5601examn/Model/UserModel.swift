@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 // Implementing a new Model to be able to have my own namings for the objects
 struct UserModel {
@@ -37,6 +38,10 @@ struct UserModel {
         
         
         return String(ageCalculation)
+    }
+    
+    var coordinates: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: Double(self.coordinateLatitude)!, longitude: Double(self.coordinateLongitude)!)
     }
     
     var picture: UIImage? {

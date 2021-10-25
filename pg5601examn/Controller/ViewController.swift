@@ -10,6 +10,7 @@ import CoreData
 
 class ViewController: UIViewController {
     var userManager = UserManager()
+    var userConverter = UserConverter()
     var users = [UserModel]()
     var userEntityArray = [UserEntity]()
     var userEntityFetched = [UserEntity]()
@@ -53,7 +54,7 @@ extension ViewController {
     func launchApplication() {
         loadUsersFromDB()
         DispatchQueue.main.async {
-            self.users = self.userManager.convertToUserModel(from: self.userEntityFetched)
+            self.users = self.userConverter.convertToUserModel(from: self.userEntityFetched)
             print(self.userEntityFetched.count)
             self.userTableView.reloadData()
         }

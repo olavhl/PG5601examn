@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B0200BF2725486F00A01932 /* UserConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0200BE2725486F00A01932 /* UserConverter.swift */; };
+		9B0200C42726ACF700A01932 /* CustomPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0200C32726ACF700A01932 /* CustomPin.swift */; };
 		9B8B26D4272169AE00927B9A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B26D3272169AE00927B9A /* UserModel.swift */; };
 		9B8B26DB2721831C00927B9A /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B26D92721831C00927B9A /* UserTableViewCell.swift */; };
 		9B8B26DC2721831C00927B9A /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8B26DA2721831C00927B9A /* UserTableViewCell.xib */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B0200BE2725486F00A01932 /* UserConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConverter.swift; sourceTree = "<group>"; };
+		9B0200C32726ACF700A01932 /* CustomPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPin.swift; sourceTree = "<group>"; };
 		9B8B26D3272169AE00927B9A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		9B8B26D92721831C00927B9A /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		9B8B26DA2721831C00927B9A /* UserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				9B91CBBE2720213300FB5001 /* UserManager.swift */,
 				9B91CBC0272024CF00FB5001 /* Users.swift */,
 				9B8B26D3272169AE00927B9A /* UserModel.swift */,
+				9B0200BE2725486F00A01932 /* UserConverter.swift */,
+				9B0200C32726ACF700A01932 /* CustomPin.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,10 +321,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B0200C42726ACF700A01932 /* CustomPin.swift in Sources */,
 				9B91CB9027201DC500FB5001 /* ViewController.swift in Sources */,
 				9BE6A2952724030600CBC34C /* DataModel.xcdatamodeld in Sources */,
 				9B91CB8C27201DC500FB5001 /* AppDelegate.swift in Sources */,
 				9B8B26DB2721831C00927B9A /* UserTableViewCell.swift in Sources */,
+				9B0200BF2725486F00A01932 /* UserConverter.swift in Sources */,
 				9B91CBBF2720213300FB5001 /* UserManager.swift in Sources */,
 				9BE6A2922723E4E500CBC34C /* MapViewController.swift in Sources */,
 				9B91CBC1272024CF00FB5001 /* Users.swift in Sources */,
