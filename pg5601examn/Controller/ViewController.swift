@@ -24,26 +24,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
         let nib = UINib(nibName: "UserTableViewCell", bundle: nil)
         userTableView.register(nib, forCellReuseIdentifier: "UserTableViewCell")
         userTableView.delegate = self
         userTableView.dataSource = self
         userManager.delegate = self
         
-        // TODO: Fix my sqlite file, and convert userEntityFetched to UserModel to display the Users
-        
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
             print("Second+")
+            launchApplication()
             defaults.set(true, forKey: "First Launch")
         } else {
             userManager.fetchAllUsers()
             print("First")
             defaults.set(true, forKey: "First Launch")
         }
-        launchApplication()
     }
 }
 
@@ -53,12 +49,9 @@ extension ViewController {
     // TODO: Need to fix this to work first time
     func launchApplication() {
         loadUsersFromDB()
-        DispatchQueue.main.async {
-            self.users = self.userConverter.convertToUserModel(from: self.userEntityFetched)
-            print(self.userEntityFetched.count)
-            self.userTableView.reloadData()
-        }
-        
+        users = userConverter.convertToUserModel(from: userEntityFetched)
+        print(userEntityFetched.count)
+        userTableView.reloadData()
     }
     
     // Saving users to CoreData
@@ -85,14 +78,11 @@ extension ViewController {
 //MARK: - UserManagerDelegate
 extension  ViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
-//        self.users = userData
-        
         DispatchQueue.main.async {
             self.userEntityArray = userData
-//            self.userTableView.reloadData()
             self.saveUsersToDB()
+            self.launchApplication()
         }
-        
     }
 }
 
@@ -100,7 +90,6 @@ extension  ViewController: UserManagerDelegate {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // Returning 100 rows in a section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print(users.count)
         return users.count
     }
     
