@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditUserViewController: UIViewController {
+class EditUserViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -21,6 +21,17 @@ class EditUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Delegating to be able to use the next-button
+        // on the keyboard to go to the next field
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.ageTextField.delegate = self
+        self.birthdateTextField.delegate = self
+        self.emailTextField.delegate = self
+        self.phoneTextField.delegate = self
+        self.cityTextField.delegate = self
+        
         firstNameTextField.placeholder = user?.firstName
         lastNameTextField.placeholder = user?.lastName
         ageTextField.placeholder = user?.age
@@ -29,9 +40,36 @@ class EditUserViewController: UIViewController {
         phoneTextField.placeholder = user?.phoneNumber
         cityTextField.placeholder = user?.city
         
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.switchToNextField(textField)
+        return true
+    }
+
+    func switchToNextField(_ currentField: UITextField) {
+        switch currentField {
+        case self.firstNameTextField:
+            self.lastNameTextField.becomeFirstResponder()
+        case self.lastNameTextField:
+            self.ageTextField.becomeFirstResponder()
+        case self.ageTextField:
+            self.birthdateTextField.becomeFirstResponder()
+        case self.birthdateTextField:
+            self.emailTextField.becomeFirstResponder()
+        case self.emailTextField:
+            self.phoneTextField.becomeFirstResponder()
+        case self.phoneTextField:
+            self.cityTextField.becomeFirstResponder()
+        default:
+            self.cityTextField.resignFirstResponder()
+        }
     }
 
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        
+        
     }
     
 }
