@@ -32,4 +32,15 @@ class UserDetailsViewController: UIViewController {
         cityLabel.text = user?.city
         userDetailsImageView.image = user?.pictureLarge
     }
+    
+    @IBAction func editUserPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showEditUser", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? EditUserViewController {
+            destination.user = user
+        }
+    }
+    
 }
