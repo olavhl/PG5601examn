@@ -23,9 +23,10 @@ struct UserConverter {
             let city = user.city ?? "Oslo"
             let coordinateLatitude = user.coordinateLatitude ?? "59.920"
             let coordinateLongitude = user.coordinateLongitude ?? "10.776"
-            let pictureUrl = user.pictureUrl ?? "https://randomuser.me/api/portraits/women/38.jpg"
+            let pictureUrl = user.pictureAsData ?? nil
+            let pictureLargeAsData = user.pictureLargeAsData ?? nil
             
-            let newUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureUrl: pictureUrl, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+            let newUser = UserModel(id: id, firstName: firstName, lastName: lastName, pictureAsData: pictureUrl, pictureLargeAsData: pictureLargeAsData, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
             
             users.append(newUser)
         }

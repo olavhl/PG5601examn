@@ -14,7 +14,8 @@ struct UserModel {
     let id: String
     let firstName: String
     let lastName: String
-    let pictureUrl: String
+    let pictureAsData: Data?
+    let pictureLargeAsData: Data?
     let email: String
     let entireBirthDate: String
     let phoneNumber: String
@@ -36,7 +37,6 @@ struct UserModel {
             ageCalculation = currentYear - Int(birthYearAsString)!
         }
         
-        
         return String(ageCalculation)
     }
     
@@ -45,19 +45,15 @@ struct UserModel {
     }
     
     var picture: UIImage? {
-        if let imageUrl = URL(string: pictureUrl) {
-            if let image = fetchImage(url: imageUrl) {
-                return image
-            }
+        if let unwrappedPicture = pictureAsData {
+            return UIImage(data: unwrappedPicture)
         }
         return nil
     }
     
-    func fetchImage(url: URL) -> UIImage? {
-        if let data = try? Data(contentsOf: url) {
-            if let image = UIImage(data: data) {
-                return image
-            }
+    var pictureLarge: UIImage? {
+        if let unwrappedPicture = pictureLargeAsData {
+            return UIImage(data: unwrappedPicture)
         }
         return nil
     }

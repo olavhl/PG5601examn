@@ -60,7 +60,14 @@ struct UserManager {
                 userEntity.city = user.location.city
                 userEntity.coordinateLatitude = user.location.coordinates.latitude
                 userEntity.coordinateLongitude = user.location.coordinates.longitude
-                userEntity.pictureUrl = user.picture.medium
+                
+                if let imageURL = URL(string: user.picture.medium) {
+                    userEntity.pictureAsData = fetchImage(url: imageURL)
+                }
+                
+                if let imageLargeURL = URL(string: user.picture.large) {
+                    userEntity.pictureLargeAsData = fetchImage(url: imageLargeURL)
+                }
                 
                 userEntityArray.append(userEntity)
             }
@@ -70,6 +77,15 @@ struct UserManager {
             print(error)
             return nil
         }
+    }
+    
+    func fetchImage(url: URL) -> Data? {
+        if let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) {
+                return image.pngData()
+            }
+        }
+        return nil
     }
     
     
