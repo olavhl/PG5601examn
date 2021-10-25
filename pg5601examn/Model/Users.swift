@@ -31,7 +31,7 @@ struct Name: Codable {
 }
 
 struct Picture: Codable {
-    let large: String // results[0].picture.large
+    let medium: String // results[0].picture.medium
 }
 
 struct Dob: Codable {

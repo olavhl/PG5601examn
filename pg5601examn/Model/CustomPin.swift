@@ -10,10 +10,12 @@ import MapKit
 
 class CustomPin: NSObject, MKAnnotation {
     var title: String?
+    var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     
-    init(title: String?, coordinates: CLLocationCoordinate2D) {
+    init(title: String?, subtitle: String?, coordinates: CLLocationCoordinate2D) {
         self.title = title
+        self.subtitle = subtitle
         self.coordinate = coordinates
     }
 }

@@ -18,8 +18,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var customPins = [MKAnnotation]()
     
     let map = MKMapView()
-    // Temporary NY coordinate
-    let coordinate = CLLocationCoordinate2DMake(40.728, -74)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,29 +27,30 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         view.addSubview(map)
         map.frame = view.bounds
         map.delegate = self
-        createCustomPins()
         
+        createCustomPins()
         map.showAnnotations(customPins, animated: false)
+        
     }
     
     
     func createCustomPins() {
         for user in users {
-            let pin = CustomPin(title: user.id, coordinates: user.coordinates)
+            let pin = CustomPin(title: user.firstName, subtitle: user.id, coordinates: user.coordinates)
             customPins.append(pin)
         }
     }
     
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         for view in views {
-            if let currentUser = users.first(where: {$0.id == view.annotation?.title}) {
+            if let currentUser = users.first(where: {$0.id == view.annotation?.subtitle}) {
                 view.image = currentUser.picture
-                
             }
-//            view.image = users[index].picture
+            // Preventing extra buble to show up when clicking a pin
+            view.canShowCallout = false
         }
     }
-
+    
     // Loading users from CoreData
     func loadUsersFromDB() {
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()

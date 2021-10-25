@@ -60,7 +60,7 @@ struct UserManager {
                 userEntity.city = user.location.city
                 userEntity.coordinateLatitude = user.location.coordinates.latitude
                 userEntity.coordinateLongitude = user.location.coordinates.longitude
-                userEntity.pictureUrl = user.picture.large
+                userEntity.pictureUrl = user.picture.medium
                 
                 userEntityArray.append(userEntity)
             }
