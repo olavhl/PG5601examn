@@ -42,6 +42,8 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.switchToNextField(textField)
         return true
@@ -65,7 +67,20 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
             self.cityTextField.resignFirstResponder()
         }
     }
-
+    @IBAction func ageTextFieldEditingEnded(_ sender: UITextField) {
+        if let ageFromField = ageTextField.text {
+            user?.age = ageFromField
+            birthdateTextField.text = user?.birthDate
+        }
+    }
+    
+    @IBAction func birthTextFieldEditingEnded(_ sender: UITextField) {
+        if let birthdateFromField = birthdateTextField.text {
+            user?.birthDate = birthdateFromField
+            ageTextField.text = user?.age
+        }
+    }
+    
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         if firstNameTextField.text != user?.firstName, firstNameTextField.text != "" {
             user?.firstName = firstNameTextField.text!

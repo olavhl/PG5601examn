@@ -48,9 +48,9 @@ struct UserModel {
         set(newAge) {
             let currentYear = Calendar.current.component(.year, from: Date())
             let birthStringArray = birthDate.split(separator: "-")
-            var year = Int()
-            if let birthYearAsString = birthStringArray.first {
-                year = currentYear - Int(birthYearAsString)!
+            var year = 0
+            if let unwrappedNewAge = Int(newAge) {
+                year = currentYear - unwrappedNewAge
             }
             self.entireBirthDate = "\(year)-\(birthStringArray[1])-\(birthStringArray[2])T21:01:01.833Z"
         }
