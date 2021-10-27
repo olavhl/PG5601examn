@@ -49,18 +49,19 @@ class UserDetailsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? EditUserViewController {
             destination.user = user
+            destination.userEntityFetched = userEntityFetched
         }
     }
     
 }
 
+//MARK: - CoreData
 extension UserDetailsViewController {
     // Loading users from CoreData
     func loadUserFromDB() {
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         // Searching for the User with ID == userId, which is gotten through segue
-        let predicate = NSPredicate(format: "id = %@", userId!)
-        request.predicate = predicate
+        request.predicate = NSPredicate(format: "id = %@", userId!)
         do {
             userEntityFetched = try context.fetch(request)
             user = userConverter.convertSingleUserModel(from: userEntityFetched[0])

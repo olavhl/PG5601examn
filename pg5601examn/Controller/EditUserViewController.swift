@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreData
 
-class EditUserViewController: UIViewController, UITextFieldDelegate {
+class EditUserViewController: UIViewController {
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -18,6 +19,9 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cityTextField: UITextField!
     
     var user: UserModel?
+    var userEntityFetched = [UserEntity]()
+    let userConverter = UserConverter()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +49,15 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tap)
     }
     
+    // Saving users to CoreData
+    func saveUsersToDB() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
+        }
+    }
+    
     @IBAction func ageTextFieldEditingEnded(_ sender: UITextField) {
         if ageTextField.text != "" {
             if let ageFromField = ageTextField.text {
@@ -70,36 +83,52 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         if firstNameTextField.text != user?.firstName, firstNameTextField.text != "" {
-            user?.firstName = firstNameTextField.text!
+            let firstname = firstNameTextField.text!
+            user?.firstName = firstname
+            userEntityFetched[0].setValue(firstname, forKey: "firstName")
         }
         if lastNameTextField.text != user?.lastName, lastNameTextField.text != "" {
-            user?.lastName = lastNameTextField.text!
+            let lastname = lastNameTextField.text!
+            user?.lastName = lastname
+            userEntityFetched[0].setValue(lastname, forKey: "lastName")
         }
         if ageTextField.text != user?.age, ageTextField.text != "" {
             // Changing the value of entireBirthdate, which will impact both
             // birthdate and age
-            user?.age = ageTextField.text!
+            let age = ageTextField.text!
+            user?.age = age
+            userEntityFetched[0].setValue(age, forKey: "age")
         }
         if birthdateTextField.text != user?.birthDate, birthdateTextField.text != "" {
-            user?.birthDate = birthdateTextField.text!
+            let birthdate = birthdateTextField.text!
+            user?.birthDate = birthdate
+            userEntityFetched[0].setValue(birthdate, forKey: "entireBirthDate")
         }
         if emailTextField.text != user?.email, emailTextField.text != "" {
-            user?.email = emailTextField.text!
+            let email = emailTextField.text!
+            user?.email = email
+            userEntityFetched[0].setValue(email, forKey: "email")
         }
         if phoneTextField.text != user?.phoneNumber, phoneTextField.text != "" {
-            user?.phoneNumber = phoneTextField.text!
+            let phone = phoneTextField.text!
+            user?.phoneNumber = phone
+            userEntityFetched[0].setValue(phone, forKey: "phoneNumber")
         }
         if cityTextField.text != user?.city, cityTextField.text != "" {
-            user?.city = cityTextField.text!
+            let city = cityTextField.text!
+            user?.city = city
+            userEntityFetched[0].setValue(city, forKey: "city")
         }
         
-        print(user!)
+        saveUsersToDB()
+        
+//        print(user!)
     }
     
 }
 
-//MARK: - Return from keyboard handling
-extension EditUserViewController {
+//MARK: - UITextFieldDelegate
+extension EditUserViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.switchToNextField(textField)
         return true
