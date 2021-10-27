@@ -42,31 +42,6 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.switchToNextField(textField)
-        return true
-    }
-
-    func switchToNextField(_ currentField: UITextField) {
-        switch currentField {
-        case self.firstNameTextField:
-            self.lastNameTextField.becomeFirstResponder()
-        case self.lastNameTextField:
-            self.ageTextField.becomeFirstResponder()
-        case self.ageTextField:
-            self.birthdateTextField.becomeFirstResponder()
-        case self.birthdateTextField:
-            self.emailTextField.becomeFirstResponder()
-        case self.emailTextField:
-            self.phoneTextField.becomeFirstResponder()
-        case self.phoneTextField:
-            self.cityTextField.becomeFirstResponder()
-        default:
-            self.cityTextField.resignFirstResponder()
-        }
-    }
     @IBAction func ageTextFieldEditingEnded(_ sender: UITextField) {
         if let ageFromField = ageTextField.text {
             user?.age = ageFromField
@@ -109,4 +84,31 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
         print(user!)
     }
     
+}
+
+//MARK: - Return from keyboard handling
+extension EditUserViewController {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.switchToNextField(textField)
+        return true
+    }
+
+    func switchToNextField(_ currentField: UITextField) {
+        switch currentField {
+        case self.firstNameTextField:
+            self.lastNameTextField.becomeFirstResponder()
+        case self.lastNameTextField:
+            self.ageTextField.becomeFirstResponder()
+        case self.ageTextField:
+            self.birthdateTextField.becomeFirstResponder()
+        case self.birthdateTextField:
+            self.emailTextField.becomeFirstResponder()
+        case self.emailTextField:
+            self.phoneTextField.becomeFirstResponder()
+        case self.phoneTextField:
+            self.cityTextField.becomeFirstResponder()
+        default:
+            self.cityTextField.resignFirstResponder()
+        }
+    }
 }
