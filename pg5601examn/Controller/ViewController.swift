@@ -49,7 +49,7 @@ extension ViewController {
     // TODO: Need to fix this to work first time
     func launchApplication() {
         loadUsersFromDB()
-        users = userConverter.convertToUserModel(from: userEntityFetched)
+        users = userConverter.convertAllToUserModel(from: userEntityFetched)
         print(userEntityFetched.count)
         userTableView.reloadData()
     }
@@ -106,7 +106,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? UserDetailsViewController {
-            destination.user = users[userTableView.indexPathForSelectedRow!.row]
+            destination.userId = users[userTableView.indexPathForSelectedRow!.row].id
         }
     }
 }

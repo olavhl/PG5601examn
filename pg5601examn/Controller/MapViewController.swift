@@ -59,7 +59,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         } catch {
             print("Error fetching data from context: \(error)")
         }
-        users = userConverter.convertToUserModel(from: usersEntity)
+        users = userConverter.convertAllToUserModel(from: usersEntity)
         
     }
 }

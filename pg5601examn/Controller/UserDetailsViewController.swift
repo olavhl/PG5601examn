@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class UserDetailsViewController: UIViewController {
     
@@ -18,10 +19,17 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     
+    var userId: String?
     var user: UserModel?
+    var userConverter = UserConverter()
+    var userEntityFetched = [UserEntity]()
+    // Accessing context from AppDelegate
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadUserFromDB()
         
         firstNameLabel.text = user?.firstName
         lastNameLabel.text = user?.lastName
@@ -31,6 +39,7 @@ class UserDetailsViewController: UIViewController {
         phoneNumberLabel.text = user?.phoneNumber
         cityLabel.text = user?.city
         userDetailsImageView.image = user?.pictureLarge
+        
     }
     
     @IBAction func editUserPressed(_ sender: UIButton) {
@@ -43,4 +52,20 @@ class UserDetailsViewController: UIViewController {
         }
     }
     
+}
+
+extension UserDetailsViewController {
+    // Loading users from CoreData
+    func loadUserFromDB() {
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        // Searching for the User with ID == userId, which is gotten through segue
+        let predicate = NSPredicate(format: "id = %@", userId!)
+        request.predicate = predicate
+        do {
+            userEntityFetched = try context.fetch(request)
+            user = userConverter.convertSingleUserModel(from: userEntityFetched[0])
+        } catch {
+            print("Error fetching data from context: \(error)")
+        }
+    }
 }
