@@ -17,12 +17,12 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
-        
+    
     var user: UserModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         firstNameLabel.text = user?.firstName
         lastNameLabel.text = user?.lastName
         ageLabel.text = user?.age

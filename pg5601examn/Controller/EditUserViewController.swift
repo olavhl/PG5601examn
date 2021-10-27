@@ -40,20 +40,32 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
         phoneTextField.text = user?.phoneNumber
         cityTextField.text = user?.city
         
+        // Dismissing keyboard when tapping anywhere else on the screen
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     @IBAction func ageTextFieldEditingEnded(_ sender: UITextField) {
-        if let ageFromField = ageTextField.text {
-            user?.age = ageFromField
-            birthdateTextField.text = user?.birthDate
+        if ageTextField.text != "" {
+            if let ageFromField = ageTextField.text {
+                user?.age = ageFromField
+                birthdateTextField.text = user?.birthDate
+            }
+        } else {
+            ageTextField.text = user?.age
         }
     }
     
     @IBAction func birthTextFieldEditingEnded(_ sender: UITextField) {
-        if let birthdateFromField = birthdateTextField.text {
-            user?.birthDate = birthdateFromField
-            ageTextField.text = user?.age
+        if birthdateTextField.text != "" {
+            if let birthdateFromField = birthdateTextField.text {
+                user?.birthDate = birthdateFromField
+                ageTextField.text = user?.age
+            }
+        } else {
+            birthdateTextField.text = user?.birthDate
         }
+        
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
