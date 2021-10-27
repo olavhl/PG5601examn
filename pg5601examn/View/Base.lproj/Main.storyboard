@@ -198,29 +198,44 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nOR-ik-8fd" userLabel="Bottom View">
                                         <rect key="frame" x="0.0" y="486.66666666666657" width="390" height="235.33333333333331"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="k8u-0C-e3R">
-                                                <rect key="frame" x="60" y="102.33333333333337" width="270" height="31"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="GBv-Dk-MnZ">
+                                                <rect key="frame" x="60" y="76.666666666666742" width="270" height="82"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYV-Q8-j3h">
-                                                        <rect key="frame" x="0.0" y="0.0" width="120" height="31"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="k8u-0C-e3R">
+                                                        <rect key="frame" x="0.0" y="0.0" width="270" height="31"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYV-Q8-j3h">
+                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="31"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="Rediger Bruker" buttonSize="medium"/>
+                                                                <connections>
+                                                                    <action selector="editUserPressed:" destination="V5L-La-EUF" eventType="touchUpInside" id="lId-LM-vjl"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4r-HA-YAs">
+                                                                <rect key="frame" x="150" y="0.0" width="120" height="31"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="filled" title="Vis i Kart"/>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ftb-4Q-URn">
+                                                        <rect key="frame" x="85" y="51" width="100.33333333333331" height="31"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="filled" title="Rediger Bruker" buttonSize="medium"/>
+                                                        <buttonConfiguration key="configuration" style="filled" title="Slett Bruker">
+                                                            <color key="baseBackgroundColor" systemColor="systemRedColor"/>
+                                                        </buttonConfiguration>
                                                         <connections>
-                                                            <action selector="editUserPressed:" destination="V5L-La-EUF" eventType="touchUpInside" id="lId-LM-vjl"/>
+                                                            <action selector="deleteUserPressed:" destination="V5L-La-EUF" eventType="touchUpInside" id="WOe-m2-xTJ"/>
                                                         </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4r-HA-YAs">
-                                                        <rect key="frame" x="150" y="0.0" width="120" height="31"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="filled" title="Vis i Kart"/>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="k8u-0C-e3R" firstAttribute="centerX" secondItem="nOR-ik-8fd" secondAttribute="centerX" id="Fvn-Ih-0KZ"/>
-                                            <constraint firstItem="k8u-0C-e3R" firstAttribute="centerY" secondItem="nOR-ik-8fd" secondAttribute="centerY" id="jeW-Y2-nJx"/>
+                                            <constraint firstItem="GBv-Dk-MnZ" firstAttribute="centerX" secondItem="nOR-ik-8fd" secondAttribute="centerX" id="hI5-YR-4jb"/>
+                                            <constraint firstItem="GBv-Dk-MnZ" firstAttribute="centerY" secondItem="nOR-ik-8fd" secondAttribute="centerY" id="obx-h2-Sd9"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -503,6 +518,9 @@
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

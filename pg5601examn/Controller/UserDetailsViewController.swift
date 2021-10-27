@@ -49,7 +49,14 @@ class UserDetailsViewController: UIViewController {
         userDetailsImageView.image = user?.pictureLarge
     }
     
-
+    @IBAction func deleteUserPressed(_ sender: UIButton) {
+        // Deleting user from context and saving to DB
+        context.delete(userEntityFetched[0])
+        saveUsersToDB()
+        // Navigating back to the previous controller
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 //MARK: - IBAction and prepareForSegue
@@ -79,6 +86,15 @@ extension UserDetailsViewController {
             user = userConverter.convertSingleUserModel(from: userEntityFetched[0])
         } catch {
             print("Error fetching data from context: \(error)")
+        }
+    }
+    
+    // Saving users to CoreData
+    func saveUsersToDB() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
         }
     }
 }
