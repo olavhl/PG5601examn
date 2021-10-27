@@ -17,19 +17,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var usersEntity = [UserEntity]()
     var customPins = [MKAnnotation]()
     
-    let map = MKMapView()
+    @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadUsersFromDB()
-        
-        view.addSubview(map)
-        map.frame = view.bounds
-        map.delegate = self
+    
+        mapView.delegate = self
         
         createCustomPins()
-        map.showAnnotations(customPins, animated: false)
+        mapView.showAnnotations(customPins, animated: false)
         
     }
     
