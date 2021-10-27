@@ -32,14 +32,13 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
         self.phoneTextField.delegate = self
         self.cityTextField.delegate = self
         
-        firstNameTextField.placeholder = user?.firstName
-        lastNameTextField.placeholder = user?.lastName
-        ageTextField.placeholder = user?.age
-        birthdateTextField.placeholder = user?.birthDate
-        emailTextField.placeholder = user?.email
-        phoneTextField.placeholder = user?.phoneNumber
-        cityTextField.placeholder = user?.city
-        
+        firstNameTextField.text = user?.firstName
+        lastNameTextField.text = user?.lastName
+        ageTextField.text = user?.age
+        birthdateTextField.text = user?.birthDate
+        emailTextField.text = user?.email
+        phoneTextField.text = user?.phoneNumber
+        cityTextField.text = user?.city
         
     }
     
@@ -68,8 +67,31 @@ class EditUserViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        if firstNameTextField.text != user?.firstName, firstNameTextField.text != "" {
+            user?.firstName = firstNameTextField.text!
+        }
+        if lastNameTextField.text != user?.lastName, lastNameTextField.text != "" {
+            user?.lastName = lastNameTextField.text!
+        }
+        if ageTextField.text != user?.age, ageTextField.text != "" {
+            // Changing the value of entireBirthdate, which will impact both
+            // birthdate and age
+            user?.age = ageTextField.text!
+        }
+        if birthdateTextField.text != user?.birthDate, birthdateTextField.text != "" {
+            user?.birthDate = birthdateTextField.text!
+        }
+        if emailTextField.text != user?.email, emailTextField.text != "" {
+            user?.email = emailTextField.text!
+        }
+        if phoneTextField.text != user?.phoneNumber, phoneTextField.text != "" {
+            user?.phoneNumber = phoneTextField.text!
+        }
+        if cityTextField.text != user?.city, cityTextField.text != "" {
+            user?.city = cityTextField.text!
+        }
         
-        
+        print(user!)
     }
     
 }

@@ -12,32 +12,48 @@ import CoreLocation
 // Implementing a new Model to be able to have my own namings for the objects
 struct UserModel {
     let id: String
-    let firstName: String
-    let lastName: String
+    var firstName: String
+    var lastName: String
     let pictureAsData: Data?
     let pictureLargeAsData: Data?
-    let email: String
-    let entireBirthDate: String
-    let phoneNumber: String
-    let city: String
+    var email: String
+    var entireBirthDate: String
+    var phoneNumber: String
+    var city: String
     let coordinateLatitude: String
     let coordinateLongitude: String
     
-    // Computed values to get the exact values needed
+    //MARK: - Computed values to get the exact values needed
     var birthDate: String {
-        let splitDOBIntoArray = entireBirthDate.split(separator: "T")
-        return String(splitDOBIntoArray[0])
+        get {
+            let splitDOBIntoArray = entireBirthDate.split(separator: "T")
+            return String(splitDOBIntoArray[0])
+        }
+        set(newBirthdate) {
+            self.entireBirthDate = "\(newBirthdate)T21:01:01.833Z"
+        }
     }
     
     var age: String {
-        let currentYear = Calendar.current.component(.year, from: Date())
-        let birthStringArray = birthDate.split(separator: "-")
-        var ageCalculation = 0
-        if let birthYearAsString = birthStringArray.first {
-            ageCalculation = currentYear - Int(birthYearAsString)!
+        get {
+            let currentYear = Calendar.current.component(.year, from: Date())
+            let birthStringArray = birthDate.split(separator: "-")
+            var ageCalculation = 0
+            if let birthYearAsString = birthStringArray.first {
+                ageCalculation = currentYear - Int(birthYearAsString)!
+            }
+
+            return String(ageCalculation)
         }
-        
-        return String(ageCalculation)
+        set(newAge) {
+            let currentYear = Calendar.current.component(.year, from: Date())
+            let birthStringArray = birthDate.split(separator: "-")
+            var year = Int()
+            if let birthYearAsString = birthStringArray.first {
+                year = currentYear - Int(birthYearAsString)!
+            }
+            self.entireBirthDate = "\(year)-\(birthStringArray[1])-\(birthStringArray[2])T21:01:01.833Z"
+        }
     }
     
     var coordinates: CLLocationCoordinate2D {
