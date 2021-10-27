@@ -48,7 +48,10 @@ class EditUserViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
-    
+}
+
+//MARK: - IBActions
+extension EditUserViewController {
     @IBAction func ageTextFieldEditingEnded(_ sender: UITextField) {
         if ageTextField.text != "" {
             if let ageFromField = ageTextField.text {
@@ -106,7 +109,6 @@ class EditUserViewController: UIViewController {
         // Navigating back to the previous controller
         _ = navigationController?.popViewController(animated: true)
     }
-    
 }
 
 //MARK: - CoreData

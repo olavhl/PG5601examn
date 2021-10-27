@@ -28,7 +28,6 @@ class UserDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadUsersAndUI()
     }
     
@@ -50,6 +49,11 @@ class UserDetailsViewController: UIViewController {
         userDetailsImageView.image = user?.pictureLarge
     }
     
+
+}
+
+//MARK: - IBAction and prepareForSegue
+extension UserDetailsViewController {
     @IBAction func editUserPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "showEditUser", sender: self)
     }
