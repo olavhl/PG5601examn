@@ -5,16 +5,18 @@
 //  Created by Olav Hartwedt Larsen on 20/10/2021.
 //
 
-import Foundation
+import CoreData
 import UIKit
 
 protocol UserManagerDelegate {
-    func didUpdateUserList(_ userManager: UserManager, userData: [UserModel])
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity])
 }
 
 struct UserManager {
     let baseUrl = "https://randomuser.me/api/?results=100&nat=no"
     var delegate: UserManagerDelegate?
+    // Accessing context from AppDelegate
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func fetchAllUsers() {
         performRequest(with: baseUrl)
@@ -33,61 +35,56 @@ struct UserManager {
                         self.delegate?.didUpdateUserList(self, userData: userData)
                     }
                 }
-                //                print(fetchJSON(data!))
             }
             
             task.resume()
         }
     }
     
-    func fetchImage(url: URL) -> UIImage? {
-        if let data = try? Data(contentsOf: url) {
-            if let image = UIImage(data: data) {
-                return image
-            }
-        }
-        return nil
-    }
-    
-    func fetchJSON(_ data: Data) -> [UserModel]? {
+    func fetchJSON(_ data: Data) -> [UserEntity]? {
         do {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
-            
-            
-            var users: [UserModel] = []
+
+            var userEntityArray: [UserEntity] = []
             
             for user in userResults {
-                let firstName = user.name.first
-                let lastName = user.name.last
-                let email = user.email
-                let birthDate = user.dob.date
-                let phoneNumber = user.cell
-                let city = user.location.city
-                let coordinateLatitude = user.location.coordinates.latitude
-                let coordinateLongitude = user.location.coordinates.longitude
-                var picture: UIImage?
+                let userEntity = UserEntity(context: self.context)
                 
-                if let imageUrl = URL(string: user.picture.large) {
-                    if let image = fetchImage(url: imageUrl) {
-                        picture = image
-                    }
-                } 
-
+                userEntity.id = user.id.value
+                userEntity.firstName = user.name.first
+                userEntity.lastName = user.name.last
+                userEntity.email = user.email
+                userEntity.entireBirthDate = user.dob.date
+                userEntity.phoneNumber = user.cell
+                userEntity.city = user.location.city
+                userEntity.coordinateLatitude = user.location.coordinates.latitude
+                userEntity.coordinateLongitude = user.location.coordinates.longitude
                 
-                // TODO: Need to fix this nil-check of picture
-                let implementedUser = UserModel(firstName: firstName, lastName: lastName, picture: picture!, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
+                if let imageURL = URL(string: user.picture.medium) {
+                    userEntity.pictureAsData = fetchImage(url: imageURL)
+                }
                 
-                users.append(implementedUser)
+                if let imageLargeURL = URL(string: user.picture.large) {
+                    userEntity.pictureLargeAsData = fetchImage(url: imageLargeURL)
+                }
+                
+                userEntityArray.append(userEntity)
             }
             
-            return users
+            return userEntityArray
         } catch {
             print(error)
             return nil
         }
-        
-        
     }
     
+    func fetchImage(url: URL) -> Data? {
+        if let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) {
+                return image.pngData()
+            }
+        }
+        return nil
+    }
 }

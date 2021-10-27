@@ -6,38 +6,83 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     var userManager = UserManager()
-    
+    var userConverter = UserConverter()
     var users = [UserModel]()
+    var userEntityArray = [UserEntity]()
+    var userEntityFetched = [UserEntity]()
+    // Accessing context from AppDelegate
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    let defaults = UserDefaults.standard
     
     @IBOutlet weak var userTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         let nib = UINib(nibName: "UserTableViewCell", bundle: nil)
         userTableView.register(nib, forCellReuseIdentifier: "UserTableViewCell")
         userTableView.delegate = self
         userTableView.dataSource = self
         userManager.delegate = self
-        userManager.fetchAllUsers()
+        
+        // Using UserDefaults to fetch API only the first time the user is opening the app.
+        if defaults.bool(forKey: "First Launch") == true {
+            print("Second+")
+            launchApplication()
+            defaults.set(true, forKey: "First Launch")
+        } else {
+            userManager.fetchAllUsers()
+            print("First")
+            defaults.set(true, forKey: "First Launch")
+        }
+    }
+}
+
+
+//MARK: - Launch && CoreData
+extension ViewController {
+    // TODO: Need to fix this to work first time
+    func launchApplication() {
+        loadUsersFromDB()
+        users = userConverter.convertToUserModel(from: userEntityFetched)
+        print(userEntityFetched.count)
+        userTableView.reloadData()
     }
     
+    // Saving users to CoreData
+    func saveUsersToDB() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
+        }
+    }
+    
+    // Loading users from CoreData
+    func loadUsersFromDB() {
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        do {
+            userEntityFetched = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context: \(error)")
+        }
+    }
 }
+
 
 //MARK: - UserManagerDelegate
 extension  ViewController: UserManagerDelegate {
-    func didUpdateUserList(_ userManager: UserManager, userData: [UserModel]) {
-        self.users = userData
-        print("DIDRUN")
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
         DispatchQueue.main.async {
-            self.userTableView.reloadData()
+            self.userEntityArray = userData
+            self.saveUsersToDB()
+            self.launchApplication()
         }
-        
     }
 }
 
@@ -45,7 +90,6 @@ extension  ViewController: UserManagerDelegate {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // Returning 100 rows in a section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(users.count)
         return users.count
     }
     
