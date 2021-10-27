@@ -49,21 +49,4 @@ struct UserConverter {
         
         return UserModel(id: id, firstName: firstName, lastName: lastName, pictureAsData: pictureUrl, pictureLargeAsData: pictureLargeAsData, email: email, entireBirthDate: birthDate, phoneNumber: phoneNumber, city: city, coordinateLatitude: coordinateLatitude, coordinateLongitude: coordinateLongitude)
     }
-    
-    func convertSingleModelToEntity(from userModel: UserModel) -> UserEntity {
-        let userEntity = UserEntity()
-        userEntity.id = userModel.id
-        userEntity.firstName = userModel.firstName
-        userEntity.lastName = userModel.lastName
-        userEntity.entireBirthDate = userModel.entireBirthDate
-        userEntity.email = userModel.email
-        userEntity.phoneNumber = userModel.phoneNumber
-        userEntity.pictureLargeAsData = userModel.pictureLargeAsData
-        userEntity.pictureAsData = userModel.pictureAsData
-        userEntity.city = userModel.city
-        userEntity.coordinateLatitude = userModel.coordinateLatitude
-        userEntity.coordinateLongitude = userModel.coordinateLongitude
-        
-        return userEntity
-    }
 }

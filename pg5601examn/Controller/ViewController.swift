@@ -41,6 +41,10 @@ class ViewController: UIViewController {
             defaults.set(true, forKey: "First Launch")
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        launchApplication()
+    }
 }
 
 

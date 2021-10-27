@@ -29,6 +29,15 @@ class UserDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadUsersAndUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadUsersAndUI()
+    }
+    
+    // Loading users from db and setting values to the fields
+    func loadUsersAndUI() {
         loadUserFromDB()
         
         firstNameLabel.text = user?.firstName
@@ -39,7 +48,6 @@ class UserDetailsViewController: UIViewController {
         phoneNumberLabel.text = user?.phoneNumber
         cityLabel.text = user?.city
         userDetailsImageView.image = user?.pictureLarge
-        
     }
     
     @IBAction func editUserPressed(_ sender: UIButton) {
@@ -52,13 +60,13 @@ class UserDetailsViewController: UIViewController {
             destination.userEntityFetched = userEntityFetched
         }
     }
-    
 }
 
 //MARK: - CoreData
 extension UserDetailsViewController {
     // Loading users from CoreData
     func loadUserFromDB() {
+        user = nil
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         // Searching for the User with ID == userId, which is gotten through segue
         request.predicate = NSPredicate(format: "id = %@", userId!)

@@ -49,20 +49,12 @@ class EditUserViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    // Saving users to CoreData
-    func saveUsersToDB() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
-    }
-    
     @IBAction func ageTextFieldEditingEnded(_ sender: UITextField) {
         if ageTextField.text != "" {
             if let ageFromField = ageTextField.text {
                 user?.age = ageFromField
                 birthdateTextField.text = user?.birthDate
+                userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
             }
         } else {
             ageTextField.text = user?.age
@@ -74,6 +66,7 @@ class EditUserViewController: UIViewController {
             if let birthdateFromField = birthdateTextField.text {
                 user?.birthDate = birthdateFromField
                 ageTextField.text = user?.age
+                userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
             }
         } else {
             birthdateTextField.text = user?.birthDate
@@ -92,18 +85,6 @@ class EditUserViewController: UIViewController {
             user?.lastName = lastname
             userEntityFetched[0].setValue(lastname, forKey: "lastName")
         }
-        if ageTextField.text != user?.age, ageTextField.text != "" {
-            // Changing the value of entireBirthdate, which will impact both
-            // birthdate and age
-            let age = ageTextField.text!
-            user?.age = age
-            userEntityFetched[0].setValue(age, forKey: "age")
-        }
-        if birthdateTextField.text != user?.birthDate, birthdateTextField.text != "" {
-            let birthdate = birthdateTextField.text!
-            user?.birthDate = birthdate
-            userEntityFetched[0].setValue(birthdate, forKey: "entireBirthDate")
-        }
         if emailTextField.text != user?.email, emailTextField.text != "" {
             let email = emailTextField.text!
             user?.email = email
@@ -121,10 +102,20 @@ class EditUserViewController: UIViewController {
         }
         
         saveUsersToDB()
-        
-//        print(user!)
     }
     
+}
+
+//MARK: - CoreData
+extension EditUserViewController {
+    // Saving users to CoreData
+    func saveUsersToDB() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
+        }
+    }
 }
 
 //MARK: - UITextFieldDelegate
