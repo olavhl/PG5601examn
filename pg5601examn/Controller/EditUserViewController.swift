@@ -102,6 +102,9 @@ class EditUserViewController: UIViewController {
         }
         
         saveUsersToDB()
+        
+        // Navigating back to the previous controller
+        _ = navigationController?.popViewController(animated: true)
     }
     
 }
