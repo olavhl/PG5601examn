@@ -10,7 +10,7 @@ import MapKit
 import CoreData
 import CoreLocation
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController {
     var userConverter = UserConverter()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var users = [UserModel]()
@@ -55,44 +55,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    
-    
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if users.count != 1 {
-            if let selectedViewId = view.annotation?.subtitle {
-                selectedId = selectedViewId
-                performSegue(withIdentifier: "showUserDetailFromMap", sender: self)
-            }
-        }
-        
-        
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? UserDetailsViewController {
-            destination.userId = selectedId
-        }
-    }
-    
     func createCustomPins() {
         for user in users {
             let pin = CustomPin(title: user.firstName, subtitle: user.id, coordinates: user.coordinates)
             customPins.append(pin)
         }
     }
-    
-    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-        for view in views {
-            if let currentUser = users.first(where: {$0.id == view.annotation?.subtitle}) {
-                view.image = currentUser.picture
-            }
-            // Preventing extra buble to show up when clicking a pin
-            view.canShowCallout = false
-        }
-    }
-    
+}
+
+//MARK: - CoreData
+extension MapViewController {
     // Loading users from CoreData
     func loadUsersFromDB() {
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
@@ -103,5 +75,33 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         users = userConverter.convertAllToUserModel(from: usersEntity)
         
+    }
+}
+
+//MARK: - MKMapViewDelegate & Segue
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        for view in views {
+            if let currentUser = users.first(where: {$0.id == view.annotation?.subtitle}) {
+                view.image = currentUser.picture
+            }
+            // Preventing extra buble to show up when clicking a pin
+            view.canShowCallout = false
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if users.count != 1 {
+            if let selectedViewId = view.annotation?.subtitle {
+                selectedId = selectedViewId
+                performSegue(withIdentifier: "showUserDetailFromMap", sender: self)
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? UserDetailsViewController {
+            destination.userId = selectedId
+        }
     }
 }
