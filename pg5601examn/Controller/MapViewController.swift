@@ -26,15 +26,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         
         // loadUsers depending on which data has been sent to the ViewController
-        if users.count == 0 {
-            loadUsersFromDB()
-            createCustomPins()
-            mapView.showAnnotations(customPins, animated: false)
-        } else {
+        if users.count == 1 {
             createCustomPins()
             mapView.showAnnotations(customPins, animated: false)
             mapView.setRegion(MKCoordinateRegion(center: users[0].coordinates, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)), animated: false)
+        } else {
+            loadUsersFromDB()
+            createCustomPins()
+            mapView.showAnnotations(customPins, animated: false)
         }
+        
         
     }
     
@@ -42,12 +43,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Removing all pins before fetching the last update from CoreData
         mapView.removeAnnotations(customPins)
         customPins.removeAll()
-        if users.count == 0 {
+        
+        if users.count == 1 {
+            createCustomPins()
+            mapView.showAnnotations(customPins, animated: false)
+        } else {
             loadUsersFromDB()
+            createCustomPins()
+            mapView.showAnnotations(customPins, animated: false)
         }
         
-        createCustomPins()
-        mapView.showAnnotations(customPins, animated: false)
+        
         
     }
     
