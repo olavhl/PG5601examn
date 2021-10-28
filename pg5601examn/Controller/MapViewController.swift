@@ -22,12 +22,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadUsersFromDB()
-    
         mapView.delegate = self
         
-        createCustomPins()
-        mapView.showAnnotations(customPins, animated: false)
+        // loadUsers depending on which data has been sent to the VievController
+        if users.count == 0 {
+            loadUsersFromDB()
+            createCustomPins()
+            mapView.showAnnotations(customPins, animated: false)
+        } else {
+            createCustomPins()
+            mapView.showAnnotations(customPins, animated: false)
+            mapView.setRegion(MKCoordinateRegion(center: users[0].coordinates, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)), animated: false)
+        }
         
     }
     

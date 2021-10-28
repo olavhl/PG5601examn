@@ -216,6 +216,9 @@
                                                                 <rect key="frame" x="150" y="0.0" width="120" height="31"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="filled" title="Vis i Kart"/>
+                                                                <connections>
+                                                                    <action selector="showUserInMapClicked:" destination="V5L-La-EUF" eventType="touchUpInside" id="Uvn-Y7-K5p"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -261,11 +264,12 @@
                         <outlet property="phoneNumberLabel" destination="B4L-d0-nZf" id="Pa8-BC-Bcw"/>
                         <outlet property="userDetailsImageView" destination="sfY-8t-kb4" id="a3y-h9-bOg"/>
                         <segue destination="CvV-Xs-qpa" kind="show" identifier="showEditUser" id="Wj7-Ed-eDF"/>
+                        <segue destination="JaZ-4N-sK7" kind="show" identifier="showSingleUserInMap" id="wf5-jb-QDB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrP-k5-dqK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2656.9230769230767" y="93.838862559241704"/>
+            <point key="canvasLocation" x="2652" y="94"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="M2S-Xp-ibk">
@@ -321,7 +325,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTH-Bj-0m3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="894" y="820"/>
+            <point key="canvasLocation" x="1543" y="819"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="rXS-yl-WfY">
@@ -332,7 +336,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="E69-Ce-qXt">
-                                <rect key="frame" x="0.0" y="88" width="390" height="673"/>
+                                <rect key="frame" x="0.0" y="88" width="390" height="722"/>
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BJe-Xg-LFn"/>
@@ -351,7 +355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kxz-Dc-6bt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="893.84615384615381" y="1486.4928909952605"/>
+            <point key="canvasLocation" x="2651" y="819"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="keQ-uT-0cv">
@@ -367,7 +371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6u-Ga-BA3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1648" y="1486"/>
+            <point key="canvasLocation" x="625" y="1486"/>
         </scene>
         <!--Settings-->
         <scene sceneID="fs3-ve-GOj">
@@ -384,7 +388,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vgr-Jn-0OE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1649" y="820"/>
+            <point key="canvasLocation" x="625" y="819"/>
         </scene>
         <!--Edit User View Controller-->
         <scene sceneID="8rd-y9-Iel">
@@ -527,6 +531,9 @@
             <point key="canvasLocation" x="3507.6923076923076" y="93.838862559241704"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wf5-jb-QDB"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="map" catalog="system" width="128" height="110"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>

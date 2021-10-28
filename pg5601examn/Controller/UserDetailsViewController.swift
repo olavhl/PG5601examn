@@ -21,6 +21,7 @@ class UserDetailsViewController: UIViewController {
     
     var userId: String?
     var user: UserModel?
+    var userArrayForMap = [UserModel]()
     var userConverter = UserConverter()
     var userEntityFetched = [UserEntity]()
     // Accessing context from AppDelegate
@@ -65,10 +66,21 @@ extension UserDetailsViewController {
         performSegue(withIdentifier: "showEditUser", sender: self)
     }
     
+    @IBAction func showUserInMapClicked(_ sender: UIButton) {
+        performSegue(withIdentifier: "showSingleUserInMap", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? EditUserViewController {
             destination.user = user
             destination.userEntityFetched = userEntityFetched
+        }
+        if let destination = segue.destination as? MapViewController {
+            if let userForMap = user {
+                userArrayForMap.append(userForMap)
+                destination.users = userArrayForMap
+            }
+            
         }
     }
 }
