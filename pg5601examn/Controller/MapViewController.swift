@@ -47,23 +47,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if users.count == 1 {
             createCustomPins()
             mapView.showAnnotations(customPins, animated: false)
+            mapView.setRegion(MKCoordinateRegion(center: users[0].coordinates, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)), animated: false)
         } else {
             loadUsersFromDB()
             createCustomPins()
             mapView.showAnnotations(customPins, animated: false)
         }
-        
-        
-        
     }
     
     
     
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let selectedViewId = view.annotation?.subtitle {
-            selectedId = selectedViewId
-            performSegue(withIdentifier: "showUserDetailFromMap", sender: self)
+        if users.count != 1 {
+            if let selectedViewId = view.annotation?.subtitle {
+                selectedId = selectedViewId
+                performSegue(withIdentifier: "showUserDetailFromMap", sender: self)
+            }
         }
+        
         
         
     }
