@@ -14,6 +14,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var userConverter = UserConverter()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var users = [UserModel]()
+    var selectedId: String?
     var usersEntity = [UserEntity]()
     var customPins = [MKAnnotation]()
     
@@ -24,7 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         mapView.delegate = self
         
-        // loadUsers depending on which data has been sent to the VievController
+        // loadUsers depending on which data has been sent to the ViewController
         if users.count == 0 {
             loadUsersFromDB()
             createCustomPins()
@@ -37,6 +38,35 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // Removing all pins before fetching the last update from CoreData
+        mapView.removeAnnotations(customPins)
+        customPins.removeAll()
+        if users.count == 0 {
+            loadUsersFromDB()
+        }
+        
+        createCustomPins()
+        mapView.showAnnotations(customPins, animated: false)
+        
+    }
+    
+    
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let selectedViewId = view.annotation?.subtitle {
+            selectedId = selectedViewId
+            performSegue(withIdentifier: "showUserDetailFromMap", sender: self)
+        }
+        
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? UserDetailsViewController {
+            destination.userId = selectedId
+        }
+    }
     
     func createCustomPins() {
         for user in users {
