@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     let defaults = UserDefaults.standard
     
     @IBOutlet weak var userTableView: UITableView!
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,9 @@ class ViewController: UIViewController {
         userTableView.dataSource = self
         userManager.delegate = self
         
+        loadingSpinner.startAnimating()
+        loadingSpinner.hidesWhenStopped = true
+        
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
             print("Second+")
@@ -39,6 +43,8 @@ class ViewController: UIViewController {
             userManager.fetchAllUsers()
             print("First")
             defaults.set(true, forKey: "First Launch")
+
+            
         }
     }
     
@@ -86,6 +92,7 @@ extension  ViewController: UserManagerDelegate {
             self.userEntityArray = userData
             self.saveUsersToDB()
             self.launchApplication()
+            self.loadingSpinner.stopAnimating()
         }
     }
 }
