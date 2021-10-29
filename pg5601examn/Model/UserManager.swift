@@ -10,6 +10,7 @@ import UIKit
 
 protocol UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity])
+    func didFailWithError(error: Error)
 }
 
 struct UserManager {
@@ -27,7 +28,7 @@ struct UserManager {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url){ (data, response, error) in
                 if error != nil {
-                    print(error!)
+                    self.delegate?.didFailWithError(error: error!)
                     return
                 }
                 if let safeData = data {
@@ -75,7 +76,7 @@ struct UserManager {
             
             return userEntityArray
         } catch {
-            print(error)
+            delegate?.didFailWithError(error: error)
             return nil
         }
     }

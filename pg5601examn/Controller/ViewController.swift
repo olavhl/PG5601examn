@@ -31,20 +31,15 @@ class ViewController: UIViewController {
         userTableView.dataSource = self
         userManager.delegate = self
         
-        loadingSpinner.startAnimating()
-        loadingSpinner.hidesWhenStopped = true
-        
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
             print("Second+")
             launchApplication()
-            defaults.set(true, forKey: "First Launch")
         } else {
+            loadingSpinner.startAnimating()
+            loadingSpinner.hidesWhenStopped = true
             userManager.fetchAllUsers()
             print("First")
-            defaults.set(true, forKey: "First Launch")
-
-            
         }
     }
     
@@ -93,7 +88,12 @@ extension  ViewController: UserManagerDelegate {
             self.saveUsersToDB()
             self.launchApplication()
             self.loadingSpinner.stopAnimating()
+            self.defaults.set(true, forKey: "First Launch")
         }
+    }
+    
+    func didFailWithError(error: Error) {
+        
     }
 }
 
