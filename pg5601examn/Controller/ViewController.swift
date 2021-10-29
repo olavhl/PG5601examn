@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         userTableView.dataSource = self
         userManager.delegate = self
         
+        
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
             print("Second+")
@@ -55,7 +56,6 @@ class ViewController: UIViewController {
 
 //MARK: - Launch && CoreData
 extension ViewController {
-    // TODO: Need to fix this to work first time
     func launchApplication() {
         loadUsersFromDB()
         users = userConverter.convertAllToUserModel(from: userEntityFetched)

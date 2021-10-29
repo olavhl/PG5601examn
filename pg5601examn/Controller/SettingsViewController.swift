@@ -9,7 +9,8 @@ import UIKit
 import CoreData
 
 class SettingsViewController: UIViewController {
-
+    
+    var userManager = UserManager()
     var userEntityFetched = [UserEntity]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let defaults = UserDefaults.standard
@@ -18,6 +19,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        userManager.delegate = self
         
         loadUsersFromDB()
 
@@ -31,14 +34,34 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func changeSeedPressed(_ sender: UIButton) {
+        // Deleting users if they are not edited
         for user in userEntityFetched {
             if user.isEdited == false {
                 context.delete(user)
             }
         }
+        userEntityFetched.removeAll()
+        
+        if let newSeed = seedTextField.text {
+            userManager.fetchAllUsers(newSeed)
+        }
+        
         
     }
     
+}
+
+extension SettingsViewController: UserManagerDelegate {
+    func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
+        DispatchQueue.main.async {
+            self.userEntityFetched = userData
+            self.saveUsersToDB()
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        
+    }
 }
 
 
