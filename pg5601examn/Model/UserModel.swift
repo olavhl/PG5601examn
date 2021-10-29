@@ -74,4 +74,29 @@ struct UserModel {
         }
         return nil
     }
+    
+    var hasBirthdayWeek: Bool {
+        // Changing to the year to 2021 to be able to calculate days between.
+        let birthArray = birthDate.split(separator: "-")
+        let birthdayThisYear = "2021-\(birthArray[1])-\(birthArray[2])"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let userBirthAsDate = dateFormatter.date(from: birthdayThisYear)
+        let dateToday = Date()
+
+        if let userBirth = userBirthAsDate {
+            if let daysBetween = Calendar.current.dateComponents([.day], from: userBirth, to: dateToday).day {
+                if daysBetween <= 7, daysBetween >= -7 {
+                    return true
+                }
+            }
+            
+        }
+        
+        
+        
+        
+        return false
+    }
 }
