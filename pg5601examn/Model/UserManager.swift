@@ -18,6 +18,7 @@ struct UserManager {
     var delegate: UserManagerDelegate?
     // Accessing context from AppDelegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let defaults = UserDefaults.standard
     
     func fetchAllUsers(_ seed: String) {
         let urlString = "\(baseUrl)&seed=\(seed)"
@@ -44,6 +45,12 @@ struct UserManager {
     }
     
     func fetchJSON(_ data: Data) -> [UserEntity]? {
+        // Getting deletedUsers from UserDefaults
+        var deletedUsersArray = [String]()
+        if let items = defaults.array(forKey: "deletedUsers") as? [String] {
+            deletedUsersArray = items
+        }
+        
         do {
             let userData = try JSONDecoder().decode(Users.self, from: data)
             let userResults = userData.results
@@ -51,28 +58,39 @@ struct UserManager {
             var userEntityArray: [UserEntity] = []
             
             for user in userResults {
-                let userEntity = UserEntity(context: self.context)
+                var isDeleted = false
                 
-                userEntity.id = user.id.value
-                userEntity.firstName = user.name.first
-                userEntity.lastName = user.name.last
-                userEntity.email = user.email
-                userEntity.entireBirthDate = user.dob.date
-                userEntity.phoneNumber = user.cell
-                userEntity.city = user.location.city
-                userEntity.coordinateLatitude = user.location.coordinates.latitude
-                userEntity.coordinateLongitude = user.location.coordinates.longitude
-                userEntity.isEdited = false
-                
-                if let imageURL = URL(string: user.picture.medium) {
-                    userEntity.pictureAsData = fetchImage(url: imageURL)
+                for deletedUser in deletedUsersArray {
+                    if deletedUser == user.id.value {
+                        isDeleted = true
+                    }
                 }
                 
-                if let imageLargeURL = URL(string: user.picture.large) {
-                    userEntity.pictureLargeAsData = fetchImage(url: imageLargeURL)
+                if isDeleted == false {
+                    let userEntity = UserEntity(context: self.context)
+                    
+                    userEntity.id = user.id.value
+                    userEntity.firstName = user.name.first
+                    userEntity.lastName = user.name.last
+                    userEntity.email = user.email
+                    userEntity.entireBirthDate = user.dob.date
+                    userEntity.phoneNumber = user.cell
+                    userEntity.city = user.location.city
+                    userEntity.coordinateLatitude = user.location.coordinates.latitude
+                    userEntity.coordinateLongitude = user.location.coordinates.longitude
+                    userEntity.isEdited = false
+                    
+                    if let imageURL = URL(string: user.picture.medium) {
+                        userEntity.pictureAsData = fetchImage(url: imageURL)
+                    }
+                    
+                    if let imageLargeURL = URL(string: user.picture.large) {
+                        userEntity.pictureLargeAsData = fetchImage(url: imageLargeURL)
+                    }
+                    
+                    userEntityArray.append(userEntity)
                 }
                 
-                userEntityArray.append(userEntity)
             }
             
             return userEntityArray
