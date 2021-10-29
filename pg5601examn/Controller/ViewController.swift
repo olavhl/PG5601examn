@@ -31,6 +31,8 @@ class ViewController: UIViewController {
         userTableView.dataSource = self
         userManager.delegate = self
         
+        // Setting spinner as background to center it
+        userTableView.backgroundView = loadingSpinner
         
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
