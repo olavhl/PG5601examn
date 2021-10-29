@@ -10,6 +10,14 @@ import CoreData
 
 class UserDetailsViewController: UIViewController {
     
+    var userId: String?
+    var user: UserModel?
+    var userArrayForMap = [UserModel]()
+    var userConverter = UserConverter()
+    var userEntityFetched = [UserEntity]()
+    // Accessing context from AppDelegate
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     @IBOutlet weak var userDetailsImageView: UIImageView!
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
@@ -18,14 +26,6 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
-    
-    var userId: String?
-    var user: UserModel?
-    var userArrayForMap = [UserModel]()
-    var userConverter = UserConverter()
-    var userEntityFetched = [UserEntity]()
-    // Accessing context from AppDelegate
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()

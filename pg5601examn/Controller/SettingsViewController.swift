@@ -11,8 +11,6 @@ import CoreData
 class SettingsViewController: UIViewController {
 
     var userEntityFetched = [UserEntity]()
-    var users = [UserModel]()
-    var userConverter = UserConverter()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let defaults = UserDefaults.standard
     
@@ -20,6 +18,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadUsersFromDB()
 
         if let seed = defaults.string(forKey: "seed") {
             seedTextField.text = seed
@@ -31,6 +31,12 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func changeSeedPressed(_ sender: UIButton) {
+        for user in userEntityFetched {
+            if user.isEdited == false {
+                context.delete(user)
+            }
+        }
+        
     }
     
 }
@@ -54,6 +60,5 @@ extension SettingsViewController {
         } catch {
             print("Error fetching data from context: \(error)")
         }
-        users = userConverter.convertAllToUserModel(from: userEntityFetched)
     }
 }
