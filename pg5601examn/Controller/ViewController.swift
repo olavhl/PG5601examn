@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let defaults = UserDefaults.standard
-    
+
     @IBOutlet weak var userTableView: UITableView!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
@@ -31,14 +31,23 @@ class ViewController: UIViewController {
         userTableView.dataSource = self
         userManager.delegate = self
         
+        // Setting spinner as background to center it
+        userTableView.backgroundView = loadingSpinner
+        
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
             print("Second+")
             launchApplication()
         } else {
+            // Starting the spinner
             loadingSpinner.startAnimating()
             loadingSpinner.hidesWhenStopped = true
-            userManager.fetchAllUsers()
+            defaults.set("ios", forKey: "seed")
+            if let seed = defaults.string(forKey: "seed") {
+                userManager.fetchAllUsers(seed)
+                
+            }
+            
             print("First")
         }
     }
@@ -51,7 +60,6 @@ class ViewController: UIViewController {
 
 //MARK: - Launch && CoreData
 extension ViewController {
-    // TODO: Need to fix this to work first time
     func launchApplication() {
         loadUsersFromDB()
         users = userConverter.convertAllToUserModel(from: userEntityFetched)
@@ -95,7 +103,9 @@ extension  ViewController: UserManagerDelegate {
     func didFailWithError(error: Error) {
         let alert = UIAlertController(title: "Something went wrong", message: "Check your WIFI-connection", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { action in
-            self.userManager.fetchAllUsers()
+            if let seed = self.defaults.string(forKey: "seed") {
+                self.userManager.fetchAllUsers(seed)
+            }
         }))
         
         DispatchQueue.main.async {
