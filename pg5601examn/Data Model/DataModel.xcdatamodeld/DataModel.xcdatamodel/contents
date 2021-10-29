@@ -8,12 +8,13 @@
         <attribute name="entireBirthDate" attributeType="String"/>
         <attribute name="firstName" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isEdited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastName" attributeType="String"/>
         <attribute name="phoneNumber" attributeType="String"/>
         <attribute name="pictureAsData" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="pictureLargeAsData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
     </entity>
     <elements>
-        <element name="UserEntity" positionX="-54" positionY="63" width="128" height="194"/>
+        <element name="UserEntity" positionX="-54" positionY="63" width="128" height="209"/>
     </elements>
 </model>

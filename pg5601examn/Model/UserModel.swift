@@ -22,6 +22,7 @@ struct UserModel {
     var city: String
     let coordinateLatitude: String
     let coordinateLongitude: String
+    var isEdited = false
     
     //MARK: - Computed values to get the exact values needed
     var birthDate: String {

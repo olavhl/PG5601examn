@@ -60,6 +60,7 @@ struct UserManager {
                 userEntity.city = user.location.city
                 userEntity.coordinateLatitude = user.location.coordinates.latitude
                 userEntity.coordinateLongitude = user.location.coordinates.longitude
+                userEntity.isEdited = false
                 
                 if let imageURL = URL(string: user.picture.medium) {
                     userEntity.pictureAsData = fetchImage(url: imageURL)

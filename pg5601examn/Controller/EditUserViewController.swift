@@ -26,6 +26,7 @@ class EditUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(userEntityFetched[0].isEdited)
         // Delegating to be able to use the next-button
         // on the keyboard to go to the next field
         self.firstNameTextField.delegate = self
@@ -58,6 +59,7 @@ extension EditUserViewController {
                 user?.age = ageFromField
                 birthdateTextField.text = user?.birthDate
                 userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
+                userEntityFetched[0].setValue(true, forKey: "isEdited")
             }
         } else {
             ageTextField.text = user?.age
@@ -70,6 +72,7 @@ extension EditUserViewController {
                 user?.birthDate = birthdateFromField
                 ageTextField.text = user?.age
                 userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
+                userEntityFetched[0].setValue(true, forKey: "isEdited")
             }
         } else {
             birthdateTextField.text = user?.birthDate
@@ -81,22 +84,27 @@ extension EditUserViewController {
         if firstNameTextField.text != user?.firstName, firstNameTextField.text != "" {
             let firstname = firstNameTextField.text!
             userEntityFetched[0].setValue(firstname, forKey: "firstName")
+            userEntityFetched[0].setValue(true, forKey: "isEdited")
         }
         if lastNameTextField.text != user?.lastName, lastNameTextField.text != "" {
             let lastname = lastNameTextField.text!
             userEntityFetched[0].setValue(lastname, forKey: "lastName")
+            userEntityFetched[0].setValue(true, forKey: "isEdited")
         }
         if emailTextField.text != user?.email, emailTextField.text != "" {
             let email = emailTextField.text!
             userEntityFetched[0].setValue(email, forKey: "email")
+            userEntityFetched[0].setValue(true, forKey: "isEdited")
         }
         if phoneTextField.text != user?.phoneNumber, phoneTextField.text != "" {
             let phone = phoneTextField.text!
             userEntityFetched[0].setValue(phone, forKey: "phoneNumber")
+            userEntityFetched[0].setValue(true, forKey: "isEdited")
         }
         if cityTextField.text != user?.city, cityTextField.text != "" {
             let city = cityTextField.text!
             userEntityFetched[0].setValue(city, forKey: "city")
+            userEntityFetched[0].setValue(true, forKey: "isEdited")
         }
         
         saveUsersToDB()
