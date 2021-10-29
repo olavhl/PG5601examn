@@ -36,7 +36,7 @@ class UserDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         loadUsersAndUI()
-        print("hasBirthDayThisWeek: \(user?.hasBirthdayWeek)")
+//        print("hasBirthDayThisWeek: \(user?.hasBirthdayWeek)")
     }
     
     // Loading users from db and setting values to the fields

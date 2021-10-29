@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let defaults = UserDefaults.standard
-    
+
     @IBOutlet weak var userTableView: UITableView!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
@@ -38,7 +38,11 @@ class ViewController: UIViewController {
         } else {
             loadingSpinner.startAnimating()
             loadingSpinner.hidesWhenStopped = true
-            userManager.fetchAllUsers()
+            defaults.set("ios", forKey: "seed")
+            if let seed = defaults.string(forKey: "seed") {
+                userManager.fetchAllUsers(seed)
+            }
+            
             print("First")
         }
     }
@@ -95,7 +99,9 @@ extension  ViewController: UserManagerDelegate {
     func didFailWithError(error: Error) {
         let alert = UIAlertController(title: "Something went wrong", message: "Check your WIFI-connection", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { action in
-            self.userManager.fetchAllUsers()
+            if let seed = self.defaults.string(forKey: "seed") {
+                self.userManager.fetchAllUsers(seed)
+            }
         }))
         
         DispatchQueue.main.async {

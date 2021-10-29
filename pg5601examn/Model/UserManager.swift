@@ -19,8 +19,9 @@ struct UserManager {
     // Accessing context from AppDelegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func fetchAllUsers() {
-        performRequest(with: baseUrl)
+    func fetchAllUsers(_ seed: String) {
+        let urlString = "\(baseUrl)&seed=\(seed)"
+        performRequest(with: urlString)
     }
     
     func performRequest(with url: String) {
