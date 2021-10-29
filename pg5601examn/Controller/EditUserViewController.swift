@@ -80,27 +80,22 @@ extension EditUserViewController {
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         if firstNameTextField.text != user?.firstName, firstNameTextField.text != "" {
             let firstname = firstNameTextField.text!
-            user?.firstName = firstname
             userEntityFetched[0].setValue(firstname, forKey: "firstName")
         }
         if lastNameTextField.text != user?.lastName, lastNameTextField.text != "" {
             let lastname = lastNameTextField.text!
-            user?.lastName = lastname
             userEntityFetched[0].setValue(lastname, forKey: "lastName")
         }
         if emailTextField.text != user?.email, emailTextField.text != "" {
             let email = emailTextField.text!
-            user?.email = email
             userEntityFetched[0].setValue(email, forKey: "email")
         }
         if phoneTextField.text != user?.phoneNumber, phoneTextField.text != "" {
             let phone = phoneTextField.text!
-            user?.phoneNumber = phone
             userEntityFetched[0].setValue(phone, forKey: "phoneNumber")
         }
         if cityTextField.text != user?.city, cityTextField.text != "" {
             let city = cityTextField.text!
-            user?.city = city
             userEntityFetched[0].setValue(city, forKey: "city")
         }
         
