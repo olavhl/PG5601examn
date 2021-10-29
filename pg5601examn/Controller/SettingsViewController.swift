@@ -14,13 +14,24 @@ class SettingsViewController: UIViewController {
     var users = [UserModel]()
     var userConverter = UserConverter()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let defaults = UserDefaults.standard
+    
+    @IBOutlet weak var seedTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let seed = defaults.string(forKey: "seed") {
+            seedTextField.text = seed
+        }
         
+        // Dismissing keyboard when tapping anywhere else on the screen
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
+    @IBAction func changeSeedPressed(_ sender: UIButton) {
+    }
     
 }
 

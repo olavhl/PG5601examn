@@ -366,14 +366,58 @@
         <!--Settings View Controller-->
         <scene sceneID="keQ-uT-0cv">
             <objects>
-                <viewController id="FwB-Eq-5el" userLabel="Settings View Controller" sceneMemberID="viewController">
+                <viewController id="FwB-Eq-5el" userLabel="Settings View Controller" customClass="SettingsViewController" customModule="pg5601examn" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZhD-3T-twQ">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="FZG-JA-tdK">
+                                <rect key="frame" x="30" y="108" width="330" height="99"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="gEd-MN-Krb">
+                                        <rect key="frame" x="0.0" y="0.0" width="330" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API-seed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbZ-2k-jwb">
+                                                <rect key="frame" x="0.0" y="0.0" width="70.333333333333329" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q0q-Su-Qhm">
+                                                <rect key="frame" x="97.333333333333329" y="0.0" width="232.66666666666669" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xob-Wx-5fj">
+                                        <rect key="frame" x="0.0" y="68" width="330" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Endre Seed"/>
+                                        <connections>
+                                            <action selector="changeSeedPressed:" destination="FwB-Eq-5el" eventType="touchUpInside" id="lzv-4O-del"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="gEd-MN-Krb" secondAttribute="trailing" id="7VR-3N-sXu"/>
+                                    <constraint firstItem="xob-Wx-5fj" firstAttribute="centerX" secondItem="FZG-JA-tdK" secondAttribute="centerX" id="dlB-Tj-MrP"/>
+                                    <constraint firstItem="gEd-MN-Krb" firstAttribute="leading" secondItem="FZG-JA-tdK" secondAttribute="leading" id="skh-ad-ubR"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="KfQ-lN-QQm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="FZG-JA-tdK" firstAttribute="top" secondItem="KfQ-lN-QQm" secondAttribute="top" constant="20" id="cn8-ya-hP1"/>
+                            <constraint firstItem="FZG-JA-tdK" firstAttribute="leading" secondItem="KfQ-lN-QQm" secondAttribute="leading" constant="30" id="nDE-zL-N9A"/>
+                            <constraint firstItem="KfQ-lN-QQm" firstAttribute="trailing" secondItem="FZG-JA-tdK" secondAttribute="trailing" constant="30" id="tvv-p3-WK8"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ln7-m8-B99"/>
+                    <connections>
+                        <outlet property="seedTextField" destination="q0q-Su-Qhm" id="hq0-Lm-Yh8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6u-Ga-BA3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
