@@ -93,6 +93,14 @@ extension  ViewController: UserManagerDelegate {
     }
     
     func didFailWithError(error: Error) {
+        let alert = UIAlertController(title: "Something went wrong", message: "Check your WIFI-connection", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { action in
+            self.userManager.fetchAllUsers()
+        }))
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
         
     }
 }
