@@ -37,6 +37,7 @@ class ViewController: UIViewController {
             print("Second+")
             launchApplication()
         } else {
+            // Starting the spinner
             loadingSpinner.startAnimating()
             loadingSpinner.hidesWhenStopped = true
             defaults.set("ios", forKey: "seed")
@@ -50,7 +51,6 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(defaults.string(forKey: "seed"))
         launchApplication()
     }
 }

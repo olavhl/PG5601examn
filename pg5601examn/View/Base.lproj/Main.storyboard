@@ -405,10 +405,15 @@
                                     <constraint firstItem="gEd-MN-Krb" firstAttribute="leading" secondItem="FZG-JA-tdK" secondAttribute="leading" id="skh-ad-ubR"/>
                                 </constraints>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="b4X-Bc-1Bo">
+                                <rect key="frame" x="176.66666666666666" y="403.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KfQ-lN-QQm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="b4X-Bc-1Bo" firstAttribute="centerX" secondItem="ZhD-3T-twQ" secondAttribute="centerX" id="27b-iu-bS1"/>
+                            <constraint firstItem="b4X-Bc-1Bo" firstAttribute="centerY" secondItem="ZhD-3T-twQ" secondAttribute="centerY" id="6XH-nm-LFF"/>
                             <constraint firstItem="FZG-JA-tdK" firstAttribute="top" secondItem="KfQ-lN-QQm" secondAttribute="top" constant="20" id="cn8-ya-hP1"/>
                             <constraint firstItem="FZG-JA-tdK" firstAttribute="leading" secondItem="KfQ-lN-QQm" secondAttribute="leading" constant="30" id="nDE-zL-N9A"/>
                             <constraint firstItem="KfQ-lN-QQm" firstAttribute="trailing" secondItem="FZG-JA-tdK" secondAttribute="trailing" constant="30" id="tvv-p3-WK8"/>
@@ -416,6 +421,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ln7-m8-B99"/>
                     <connections>
+                        <outlet property="loadingSeedSpinner" destination="b4X-Bc-1Bo" id="w8H-9J-EsQ"/>
                         <outlet property="seedTextField" destination="q0q-Su-Qhm" id="hq0-Lm-Yh8"/>
                     </connections>
                 </viewController>

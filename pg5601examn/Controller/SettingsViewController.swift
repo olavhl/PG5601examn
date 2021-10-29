@@ -16,6 +16,7 @@ class SettingsViewController: UIViewController {
     let defaults = UserDefaults.standard
     
     @IBOutlet weak var seedTextField: UITextField!
+    @IBOutlet weak var loadingSeedSpinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,10 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func changeSeedPressed(_ sender: UIButton) {
+        // Starting the spinner
+        loadingSeedSpinner.startAnimating()
+        loadingSeedSpinner.hidesWhenStopped = true
+        
         // Deleting users if they are not edited
         for user in userEntityFetched {
             if user.isEdited == false {
@@ -57,6 +62,7 @@ extension SettingsViewController: UserManagerDelegate {
         DispatchQueue.main.async {
             self.userEntityFetched = userData
             self.saveUsersToDB()
+            self.loadingSeedSpinner.stopAnimating()
         }
     }
     
