@@ -15,8 +15,10 @@ class UserDetailsViewController: UIViewController {
     var userArrayForMap = [UserModel]()
     var userConverter = UserConverter()
     var userEntityFetched = [UserEntity]()
+    var deletedUsersArray = [String]()
     // Accessing context from AppDelegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let defaults = UserDefaults.standard
     
     @IBOutlet weak var userDetailsImageView: UIImageView!
     @IBOutlet weak var firstNameLabel: UILabel!
@@ -29,6 +31,11 @@ class UserDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Fetching deletedUsers from UserDefaults
+        if let items = defaults.array(forKey: "deletedUsers") as? [String] {
+            deletedUsersArray = items
+        }
         
         loadUsersAndUI()
 
@@ -54,6 +61,12 @@ class UserDetailsViewController: UIViewController {
     }
     
     @IBAction func deleteUserPressed(_ sender: UIButton) {
+        // Storing deletedUsers in UserDefaults
+        if let deletedUserId = userEntityFetched[0].id {
+            deletedUsersArray.append(deletedUserId)
+            defaults.set(deletedUsersArray, forKey: "deletedUsers")
+        }
+        
         // Deleting user from context and saving to DB
         context.delete(userEntityFetched[0])
         saveUsersToDB()
