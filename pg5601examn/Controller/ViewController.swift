@@ -42,6 +42,7 @@ class ViewController: UIViewController {
             defaults.set("ios", forKey: "seed")
             if let seed = defaults.string(forKey: "seed") {
                 userManager.fetchAllUsers(seed)
+                
             }
             
             print("First")
@@ -49,6 +50,7 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print(defaults.string(forKey: "seed"))
         launchApplication()
     }
 }

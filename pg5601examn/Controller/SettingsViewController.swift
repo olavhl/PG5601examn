@@ -44,6 +44,7 @@ class SettingsViewController: UIViewController {
         
         if let newSeed = seedTextField.text {
             userManager.fetchAllUsers(newSeed)
+            defaults.set(newSeed, forKey: "seed")
         }
         
         
