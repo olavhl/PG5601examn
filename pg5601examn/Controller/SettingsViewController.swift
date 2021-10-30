@@ -11,6 +11,7 @@ import CoreData
 class SettingsViewController: UIViewController {
     
     var userManager = UserManager()
+    var coreDataManager = CoreDataManager()
     var userEntityFetched = [UserEntity]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let defaults = UserDefaults.standard
@@ -23,7 +24,7 @@ class SettingsViewController: UIViewController {
         
         userManager.delegate = self
         
-        loadUsersFromDB()
+        userEntityFetched = coreDataManager.loadUsersFromDB(context: context)
 
         if let seed = defaults.string(forKey: "seed") {
             seedTextField.text = seed
@@ -61,7 +62,7 @@ extension SettingsViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
         DispatchQueue.main.async {
             self.userEntityFetched = userData
-            self.saveUsersToDB()
+            self.coreDataManager.saveUsersToDB(context: self.context)
             self.loadingSeedSpinner.stopAnimating()
         }
     }
@@ -76,28 +77,6 @@ extension SettingsViewController: UserManagerDelegate {
         
         DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
-        }
-    }
-}
-
-
-extension SettingsViewController {
-    // Saving users to CoreData
-    func saveUsersToDB() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
-    }
-    
-    // Loading users from CoreData
-    func loadUsersFromDB() {
-        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        do {
-            userEntityFetched = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context: \(error)")
         }
     }
 }
