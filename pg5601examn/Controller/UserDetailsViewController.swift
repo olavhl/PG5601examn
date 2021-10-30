@@ -28,9 +28,23 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var imageContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let cakeImage = "🎂".image()
+        let cakeSliceImage = "🍰".image()
+        let cupcakeImage = "🧁".image()
+        let birthdayImage = "🎉".image()
+        
+        let cakeView = UIImageView(image: cakeImage)
+        cakeView.frame =  CGRect(x: 100, y: 80, width: 50, height: 50)
+        view.addSubview(cakeView)
+        
+        let birthdayView = UIImageView(image: birthdayImage)
+        birthdayView.frame = CGRect(x: 100, y: 100, width: 50, height: 50)
+        imageContainer.addSubview(birthdayView)
         
         // Fetching deletedUsers from UserDefaults
         if let items = defaults.array(forKey: "deletedUsers") as? [String] {
@@ -124,5 +138,21 @@ extension UserDetailsViewController {
         } catch {
             print("Error saving context: \(error)")
         }
+    }
+}
+
+//MARK: - Converting Emoji-strings to images
+// Ready documentation to get source
+extension String {
+    func image() -> UIImage? {
+        let size = CGSize(width: 40, height: 40)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIColor.white.set()
+        let rect = CGRect(origin: .zero, size: size)
+        UIRectFill(CGRect(origin: .zero, size: size))
+        (self as AnyObject).draw(in: rect, withAttributes: [.font: UIFont.systemFont(ofSize: 40)])
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
