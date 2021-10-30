@@ -200,7 +200,7 @@ extension UserDetailsViewController {
 }
 
 //MARK: - Converting Emoji-strings to images
-// Ready documentation to get source
+// Read documentation to get source
 extension String {
     func image() -> UIImage? {
         let size = CGSize(width: 40, height: 40)

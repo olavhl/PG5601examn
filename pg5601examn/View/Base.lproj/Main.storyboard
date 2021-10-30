@@ -566,7 +566,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7K-6m-uRv">
-                                <rect key="frame" x="131.66666666666666" y="483" width="126.66666666666666" height="31"/>
+                                <rect key="frame" x="131.66666666666666" y="608" width="126.66666666666666" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Lagre endringer"/>
                                 <connections>
@@ -577,11 +577,11 @@
                         <viewLayoutGuide key="safeArea" id="2tY-4A-uhW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="k7K-6m-uRv" firstAttribute="top" secondItem="VB6-m2-LJ3" secondAttribute="bottom" constant="75" id="NS8-lp-KBg"/>
                             <constraint firstItem="k7K-6m-uRv" firstAttribute="centerX" secondItem="dH1-F1-9RE" secondAttribute="centerX" id="TkH-cy-abT"/>
                             <constraint firstItem="VB6-m2-LJ3" firstAttribute="top" secondItem="2tY-4A-uhW" secondAttribute="top" constant="40" id="evR-R4-VB6"/>
                             <constraint firstItem="2tY-4A-uhW" firstAttribute="trailing" secondItem="VB6-m2-LJ3" secondAttribute="trailing" constant="30" id="kKu-zj-9GZ"/>
                             <constraint firstItem="VB6-m2-LJ3" firstAttribute="leading" secondItem="2tY-4A-uhW" secondAttribute="leading" constant="30" id="n6h-Kx-CWU"/>
+                            <constraint firstItem="k7K-6m-uRv" firstAttribute="top" secondItem="VB6-m2-LJ3" secondAttribute="bottom" constant="200" id="vBp-kr-b9r"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lSz-Nf-WPW"/>
