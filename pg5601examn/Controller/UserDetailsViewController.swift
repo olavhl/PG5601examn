@@ -38,23 +38,39 @@ class UserDetailsViewController: UIViewController {
         let cupcakeImage = "🧁".image()
         let birthdayImage = "🎉".image()
         
-        let cakeView = UIImageView(image: cakeImage)
-        cakeView.frame =  CGRect(x: 100, y: 80, width: 50, height: 50)
-        view.addSubview(cakeView)
-        
         let birthdayView = UIImageView(image: birthdayImage)
         birthdayView.frame = CGRect(x: 110, y: 110, width: 40, height: 40)
         imageContainer.addSubview(birthdayView)
         
-        UIView.animate(withDuration: 4, delay: 0, options: [.curveLinear], animations: {
-            cakeView.frame.origin.y = self.view.frame.height - 200
-        }) { _ in
-            UIView.animate(withDuration: 4, delay: 0, options: .curveLinear, animations: {
+        let cakeView = UIImageView(image: cakeImage)
+        cakeView.frame =  CGRect(x: 100, y: 80, width: 50, height: 50)
+        view.addSubview(cakeView)
+        
+//        UIView.animate(withDuration: 4, delay: 0, options: [.curveLinear, .repeat], animations: {
+//            cakeView.frame.origin.y = self.view.frame.height - 200
+//        }) { _ in
+////            UIView.animate(withDuration: 2.5, delay: 0, options: [.curveLinear], animations: {
+////                cakeView.frame.origin.y = self.view.frame.height
+////                cakeView.frame.size.width -= 49
+////                cakeView.frame.size.height -= 49
+////            }, completion: nil)
+//            UIView.animate(withDuration: 2.5, animations: {
+//                cakeView.frame.origin.y = self.view.frame.height
+//                cakeView.frame.size.width -= 49
+//                cakeView.frame.size.height -= 49
+//            })
+//        }
+        
+        UIView.animateKeyframes(withDuration: 6.5, delay: 0, options: .repeat, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 4/6.5) {
+                cakeView.frame.origin.y = self.view.frame.height - 200
+            }
+            UIView.addKeyframe(withRelativeStartTime: 4/6.5, relativeDuration: 2.5/6.5) {
                 cakeView.frame.origin.y = self.view.frame.height
                 cakeView.frame.size.width -= 49
                 cakeView.frame.size.height -= 49
-            }, completion: nil)
-        }
+            }
+        })
         
         
         // Fetching deletedUsers from UserDefaults
