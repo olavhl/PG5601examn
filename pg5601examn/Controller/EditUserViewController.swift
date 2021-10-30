@@ -118,9 +118,8 @@ extension EditUserViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         birthdateTextField.text = dateFormatter.string(from: sender.date)
-        print(dateFormatter.string(from: sender.date))
         
-        if let birthdateFromField = birthdateTextField.text {
+        if user?.birthDate != birthdateTextField.text {
             user?.birthDate = dateFormatter.string(from: sender.date)
             ageTextField.text = user?.age
             userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
