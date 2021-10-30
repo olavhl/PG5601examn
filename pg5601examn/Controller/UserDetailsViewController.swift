@@ -43,8 +43,19 @@ class UserDetailsViewController: UIViewController {
         view.addSubview(cakeView)
         
         let birthdayView = UIImageView(image: birthdayImage)
-        birthdayView.frame = CGRect(x: 100, y: 100, width: 50, height: 50)
+        birthdayView.frame = CGRect(x: 110, y: 110, width: 40, height: 40)
         imageContainer.addSubview(birthdayView)
+        
+        UIView.animate(withDuration: 4, delay: 0, options: [.curveLinear], animations: {
+            cakeView.frame.origin.y = self.view.frame.height - 200
+        }) { _ in
+            UIView.animate(withDuration: 4, delay: 0, options: .curveLinear, animations: {
+                cakeView.frame.origin.y = self.view.frame.height
+                cakeView.frame.size.width -= 49
+                cakeView.frame.size.height -= 49
+            }, completion: nil)
+        }
+        
         
         // Fetching deletedUsers from UserDefaults
         if let items = defaults.array(forKey: "deletedUsers") as? [String] {
