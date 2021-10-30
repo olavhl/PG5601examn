@@ -60,18 +60,30 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBP-aJ-GnO" userLabel="Top View">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="235.33333333333334"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sfY-8t-kb4">
-                                                <rect key="frame" x="120" y="42" width="150" height="151.33333333333334"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="saz-o2-iBH" userLabel="Image Container">
+                                                <rect key="frame" x="120" y="42.666666666666657" width="150" height="150"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sfY-8t-kb4">
+                                                        <rect key="frame" x="0.0" y="1" width="150" height="150"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="150" id="e98-b6-5DU"/>
+                                                            <constraint firstAttribute="width" constant="150" id="o7d-4n-Qsi"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="150" id="yBF-0C-4M5"/>
+                                                    <constraint firstAttribute="width" constant="150" id="56c-5L-8ir"/>
+                                                    <constraint firstItem="sfY-8t-kb4" firstAttribute="top" secondItem="saz-o2-iBH" secondAttribute="top" constant="1" id="K55-e4-CNz"/>
+                                                    <constraint firstItem="sfY-8t-kb4" firstAttribute="centerX" secondItem="saz-o2-iBH" secondAttribute="centerX" id="dtu-Ma-o4H"/>
+                                                    <constraint firstAttribute="height" constant="150" id="t7G-LQ-k1t"/>
                                                 </constraints>
-                                            </imageView>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="sfY-8t-kb4" firstAttribute="top" secondItem="vBP-aJ-GnO" secondAttribute="top" constant="42" id="9gD-fk-xib"/>
-                                            <constraint firstItem="sfY-8t-kb4" firstAttribute="centerY" secondItem="vBP-aJ-GnO" secondAttribute="centerY" id="EPy-R3-Pey"/>
-                                            <constraint firstItem="sfY-8t-kb4" firstAttribute="centerX" secondItem="vBP-aJ-GnO" secondAttribute="centerX" id="kR2-wu-eyI"/>
+                                            <constraint firstItem="saz-o2-iBH" firstAttribute="centerY" secondItem="vBP-aJ-GnO" secondAttribute="centerY" id="4qi-7j-YgC"/>
+                                            <constraint firstItem="saz-o2-iBH" firstAttribute="centerX" secondItem="vBP-aJ-GnO" secondAttribute="centerX" id="IEq-2I-UM4"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cip-sB-KlT" userLabel="Middle View">
@@ -265,6 +277,7 @@
                         <outlet property="cityLabel" destination="nD9-qB-s0l" id="XF0-mU-83F"/>
                         <outlet property="emailLabel" destination="hBL-wM-SRj" id="dR2-7R-EbO"/>
                         <outlet property="firstNameLabel" destination="4iT-3L-CwS" id="z9n-Kh-5PQ"/>
+                        <outlet property="imageContainer" destination="saz-o2-iBH" id="OCv-xM-ueG"/>
                         <outlet property="lastNameLabel" destination="IzJ-Ke-2fw" id="mSw-wQ-48x"/>
                         <outlet property="phoneNumberLabel" destination="B4L-d0-nZf" id="Pa8-BC-Bcw"/>
                         <outlet property="userDetailsImageView" destination="sfY-8t-kb4" id="a3y-h9-bOg"/>
@@ -274,7 +287,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrP-k5-dqK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2652" y="94"/>
+            <point key="canvasLocation" x="2649.2307692307691" y="93.838862559241704"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="M2S-Xp-ibk">
