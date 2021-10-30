@@ -11,14 +11,14 @@ import CoreData
 class ViewController: UIViewController {
     var userManager = UserManager()
     var userConverter = UserConverter()
+    let coredataManager = CoreDataManager()
     var users = [UserModel]()
-    var userEntityArray = [UserEntity]()
     var userEntityFetched = [UserEntity]()
-    // Accessing context from AppDelegate
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    // Accessing UserDefaults and context from AppDelegate
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let defaults = UserDefaults.standard
-
+    
     @IBOutlet weak var userTableView: UITableView!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
@@ -36,7 +36,6 @@ class ViewController: UIViewController {
         
         // Using UserDefaults to fetch API only the first time the user is opening the app.
         if defaults.bool(forKey: "First Launch") == true {
-            print("Second+")
             launchApplication()
         } else {
             // Starting the spinner
@@ -45,10 +44,7 @@ class ViewController: UIViewController {
             defaults.set("ios", forKey: "seed")
             if let seed = defaults.string(forKey: "seed") {
                 userManager.fetchAllUsers(seed)
-                
             }
-            
-            print("First")
         }
     }
     
@@ -61,29 +57,10 @@ class ViewController: UIViewController {
 //MARK: - Launch && CoreData
 extension ViewController {
     func launchApplication() {
-        loadUsersFromDB()
+        userEntityFetched = coredataManager.loadUsersFromDB(context: context)
         users = userConverter.convertAllToUserModel(from: userEntityFetched)
         print(userEntityFetched.count)
         userTableView.reloadData()
-    }
-    
-    // Saving users to CoreData
-    func saveUsersToDB() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
-    }
-    
-    // Loading users from CoreData
-    func loadUsersFromDB() {
-        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        do {
-            userEntityFetched = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context: \(error)")
-        }
     }
 }
 
@@ -92,8 +69,8 @@ extension ViewController {
 extension  ViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
         DispatchQueue.main.async {
-            self.userEntityArray = userData
-            self.saveUsersToDB()
+            self.userEntityFetched = userData
+            self.coredataManager.saveUsersToDB(context: self.context)
             self.launchApplication()
             self.loadingSpinner.stopAnimating()
             self.defaults.set(true, forKey: "First Launch")

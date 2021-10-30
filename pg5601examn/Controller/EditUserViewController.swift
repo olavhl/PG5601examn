@@ -18,9 +18,10 @@ class EditUserViewController: UIViewController {
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     
+    let userConverter = UserConverter()
+    let coreDataManager = CoreDataManager()
     var user: UserModel?
     var userEntityFetched = [UserEntity]()
-    let userConverter = UserConverter()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let datePicker = UIDatePicker()
     
@@ -96,7 +97,7 @@ extension EditUserViewController {
             userEntityFetched[0].setValue(true, forKey: "isEdited")
         }
         
-        saveUsersToDB()
+        coreDataManager.saveUsersToDB(context: context)
         
         // Navigating back to the previous controller
         _ = navigationController?.popViewController(animated: true)
@@ -118,25 +119,12 @@ extension EditUserViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         birthdateTextField.text = dateFormatter.string(from: sender.date)
-        print(dateFormatter.string(from: sender.date))
         
-        if let birthdateFromField = birthdateTextField.text {
-            user?.birthDate = birthdateFromField
+        if user?.birthDate != birthdateTextField.text {
+            user?.birthDate = dateFormatter.string(from: sender.date)
             ageTextField.text = user?.age
             userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
             userEntityFetched[0].setValue(true, forKey: "isEdited")
-        }
-    }
-}
-
-//MARK: - CoreData
-extension EditUserViewController {
-    // Saving users to CoreData
-    func saveUsersToDB() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
         }
     }
 }

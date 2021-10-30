@@ -11,6 +11,7 @@
 		9B0200C42726ACF700A01932 /* CustomPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0200C32726ACF700A01932 /* CustomPin.swift */; };
 		9B0200C62727058E00A01932 /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0200C52727058E00A01932 /* EditUserViewController.swift */; };
 		9B36ECFE272BE30A003F9D07 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B36ECFD272BE30A003F9D07 /* SettingsViewController.swift */; };
+		9B3FC662272DD07000C812FF /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3FC661272DD07000C812FF /* CoreDataManager.swift */; };
 		9B8B26D4272169AE00927B9A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B26D3272169AE00927B9A /* UserModel.swift */; };
 		9B8B26DB2721831C00927B9A /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8B26D92721831C00927B9A /* UserTableViewCell.swift */; };
 		9B8B26DC2721831C00927B9A /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8B26DA2721831C00927B9A /* UserTableViewCell.xib */; };
@@ -52,6 +53,7 @@
 		9B0200C32726ACF700A01932 /* CustomPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPin.swift; sourceTree = "<group>"; };
 		9B0200C52727058E00A01932 /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		9B36ECFD272BE30A003F9D07 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9B3FC661272DD07000C812FF /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9B8B26D3272169AE00927B9A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		9B8B26D92721831C00927B9A /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		9B8B26DA2721831C00927B9A /* UserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				9B8B26D3272169AE00927B9A /* UserModel.swift */,
 				9B0200BE2725486F00A01932 /* UserConverter.swift */,
 				9B0200C32726ACF700A01932 /* CustomPin.swift */,
+				9B3FC661272DD07000C812FF /* CoreDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				9B0200C42726ACF700A01932 /* CustomPin.swift in Sources */,
 				9B91CB9027201DC500FB5001 /* ViewController.swift in Sources */,
 				9BE6A2952724030600CBC34C /* DataModel.xcdatamodeld in Sources */,
+				9B3FC662272DD07000C812FF /* CoreDataManager.swift in Sources */,
 				9B91CB8C27201DC500FB5001 /* AppDelegate.swift in Sources */,
 				9B8B26DB2721831C00927B9A /* UserTableViewCell.swift in Sources */,
 				9B0200BF2725486F00A01932 /* UserConverter.swift in Sources */,
