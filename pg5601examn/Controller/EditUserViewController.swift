@@ -22,9 +22,12 @@ class EditUserViewController: UIViewController {
     var userEntityFetched = [UserEntity]()
     let userConverter = UserConverter()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createDatePicker()
         
         print(userEntityFetched[0].isEdited)
         // Delegating to be able to use the next-button
@@ -66,20 +69,6 @@ extension EditUserViewController {
         }
     }
     
-    @IBAction func birthTextFieldEditingEnded(_ sender: UITextField) {
-        if birthdateTextField.text != "" {
-            if let birthdateFromField = birthdateTextField.text {
-                user?.birthDate = birthdateFromField
-                ageTextField.text = user?.age
-                userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
-                userEntityFetched[0].setValue(true, forKey: "isEdited")
-            }
-        } else {
-            birthdateTextField.text = user?.birthDate
-        }
-        
-    }
-    
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         if firstNameTextField.text != user?.firstName, firstNameTextField.text != "" {
             let firstname = firstNameTextField.text!
@@ -111,6 +100,32 @@ extension EditUserViewController {
         
         // Navigating back to the previous controller
         _ = navigationController?.popViewController(animated: true)
+    }
+}
+
+//MARK: - DatePicker
+extension EditUserViewController {
+    func createDatePicker() {
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+        datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
+        datePicker.frame.size = CGSize(width: 0, height: 150)
+        birthdateTextField.inputView = datePicker
+    }
+    
+    @objc func datePickerValueChanged(sender: UIDatePicker)
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        birthdateTextField.text = dateFormatter.string(from: sender.date)
+        print(dateFormatter.string(from: sender.date))
+        
+        if let birthdateFromField = birthdateTextField.text {
+            user?.birthDate = birthdateFromField
+            ageTextField.text = user?.age
+            userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
+            userEntityFetched[0].setValue(true, forKey: "isEdited")
+        }
     }
 }
 
