@@ -12,6 +12,7 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     var userConverter = UserConverter()
+    var coreDataManager = CoreDataManager()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var users = [UserModel]()
     var selectedId: String?
@@ -31,7 +32,8 @@ class MapViewController: UIViewController {
             mapView.showAnnotations(customPins, animated: false)
             mapView.setRegion(MKCoordinateRegion(center: users[0].coordinates, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)), animated: false)
         } else {
-            loadUsersFromDB()
+            usersEntity = coreDataManager.loadUsersFromDB(context: context)
+            users = userConverter.convertAllToUserModel(from: usersEntity)
             createCustomPins()
             mapView.showAnnotations(customPins, animated: false)
         }
@@ -49,7 +51,8 @@ class MapViewController: UIViewController {
             mapView.showAnnotations(customPins, animated: false)
             mapView.setRegion(MKCoordinateRegion(center: users[0].coordinates, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)), animated: false)
         } else {
-            loadUsersFromDB()
+            usersEntity = coreDataManager.loadUsersFromDB(context: context)
+            users = userConverter.convertAllToUserModel(from: usersEntity)
             createCustomPins()
             mapView.showAnnotations(customPins, animated: false)
         }
@@ -60,21 +63,6 @@ class MapViewController: UIViewController {
             let pin = CustomPin(title: user.firstName, subtitle: user.id, coordinates: user.coordinates)
             customPins.append(pin)
         }
-    }
-}
-
-//MARK: - CoreData
-extension MapViewController {
-    // Loading users from CoreData
-    func loadUsersFromDB() {
-        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        do {
-            usersEntity = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context: \(error)")
-        }
-        users = userConverter.convertAllToUserModel(from: usersEntity)
-        
     }
 }
 
