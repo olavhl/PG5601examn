@@ -32,8 +32,6 @@ class UserDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        createEmojis()
         
         // Fetching deletedUsers from UserDefaults
         if let items = defaults.array(forKey: "deletedUsers") as? [String] {
@@ -42,11 +40,17 @@ class UserDetailsViewController: UIViewController {
         
         loadUsersAndUI()
 
+        if user?.hasBirthdayWeek == true {
+            createEmojis()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         loadUsersAndUI()
 //        print("hasBirthDayThisWeek: \(user?.hasBirthdayWeek)")
+        if user?.hasBirthdayWeek == true {
+            createEmojis()
+        }
     }
     
     // Loading users from db and setting values to the fields
@@ -178,15 +182,15 @@ extension UserDetailsViewController {
         animateEmojis(emojiView: cupcakeView, delay: 1.0)
         animateEmojis(emojiView: cake2View, delay: 4.0)
         animateEmojis(emojiView: cakeSlice2View, delay: 0.5)
-        animateEmojis(emojiView: cupcake2View, delay: 5)
+        animateEmojis(emojiView: cupcake2View, delay: 3.0)
     }
     
     func animateEmojis(emojiView: UIView, delay: Double) {
-        UIView.animateKeyframes(withDuration: 6.5, delay: delay, options: [.repeat, .calculationModeLinear], animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 4/6.5) {
+        UIView.animateKeyframes(withDuration: 5.0, delay: delay, options: [.repeat, .calculationModeLinear], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 3.5/5.0) {
                 emojiView.frame.origin.y = self.view.frame.height - 200
             }
-            UIView.addKeyframe(withRelativeStartTime: 4/6.5, relativeDuration: 2.5/6.5) {
+            UIView.addKeyframe(withRelativeStartTime: 4/6.5, relativeDuration: 1.5/5.0) {
                 emojiView.frame.origin.y = self.view.frame.height
                 emojiView.frame.size.width -= 49
                 emojiView.frame.size.height -= 49
