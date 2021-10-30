@@ -121,7 +121,7 @@ extension EditUserViewController {
         print(dateFormatter.string(from: sender.date))
         
         if let birthdateFromField = birthdateTextField.text {
-            user?.birthDate = birthdateFromField
+            user?.birthDate = dateFormatter.string(from: sender.date)
             ageTextField.text = user?.age
             userEntityFetched[0].setValue(user?.entireBirthDate, forKey: "entireBirthDate")
             userEntityFetched[0].setValue(true, forKey: "isEdited")

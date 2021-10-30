@@ -10,6 +10,7 @@ import CoreData
 
 class UserDetailsViewController: UIViewController {
     
+    var coreDataManager = CoreDataManager()
     var userId: String?
     var user: UserModel?
     var userArrayForMap = [UserModel]()
@@ -47,7 +48,6 @@ class UserDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         loadUsersAndUI()
-//        print("hasBirthDayThisWeek: \(user?.hasBirthdayWeek)")
         if user?.hasBirthdayWeek == true {
             createEmojis()
         }
@@ -55,7 +55,12 @@ class UserDetailsViewController: UIViewController {
     
     // Loading users from db and setting values to the fields
     func loadUsersAndUI() {
-        loadUserFromDB()
+        user = nil
+        if let newUserId = userId {
+            userEntityFetched = coreDataManager.loadSingleUserFromDB(context: context, userId: newUserId)
+            user = userConverter.convertSingleUserModel(from: userEntityFetched[0])
+        }
+        
         
         firstNameLabel.text = user?.firstName
         lastNameLabel.text = user?.lastName
@@ -76,7 +81,7 @@ class UserDetailsViewController: UIViewController {
         
         // Deleting user from context and saving to DB
         context.delete(userEntityFetched[0])
-        saveUsersToDB()
+        coreDataManager.saveUsersToDB(context: context)
         // Navigating back to the previous controller
         _ = navigationController?.popViewController(animated: true)
     }
@@ -104,32 +109,6 @@ extension UserDetailsViewController {
                 destination.users = userArrayForMap
             }
             
-        }
-    }
-}
-
-//MARK: - CoreData
-extension UserDetailsViewController {
-    // Loading users from CoreData
-    func loadUserFromDB() {
-        user = nil
-        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        // Searching for the User with ID == userId, which is gotten through segue
-        request.predicate = NSPredicate(format: "id = %@", userId!)
-        do {
-            userEntityFetched = try context.fetch(request)
-            user = userConverter.convertSingleUserModel(from: userEntityFetched[0])
-        } catch {
-            print("Error fetching data from context: \(error)")
-        }
-    }
-    
-    // Saving users to CoreData
-    func saveUsersToDB() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
         }
     }
 }

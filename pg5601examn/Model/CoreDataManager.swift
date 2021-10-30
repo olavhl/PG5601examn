@@ -19,10 +19,25 @@ struct CoreDataManager {
         }
     }
     
-    // Loading users from CoreData
+    // Loading all users from CoreData
     func loadUsersFromDB(context: NSManagedObjectContext) -> [UserEntity] {
         let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
         var userEntityFetched = [UserEntity]()
+        do {
+            userEntityFetched = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context: \(error)")
+        }
+        
+        return userEntityFetched
+    }
+    
+    // Loading single User from CoreData
+    func loadSingleUserFromDB(context: NSManagedObjectContext, userId: String) -> [UserEntity] {
+        var userEntityFetched = [UserEntity]()
+        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
+        // Searching for the User with ID == userId, which is gotten through segue
+        request.predicate = NSPredicate(format: "id = %@", userId)
         do {
             userEntityFetched = try context.fetch(request)
         } catch {
