@@ -32,49 +32,8 @@ class UserDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let birthdayImage = "🎉".image()
-        let cakeImage = "🎂".image()
-        let cakeSliceImage = "🍰".image()
-        let cupcakeImage = "🧁".image()
-        let cake2Image = "🎂".image()
-        let cake2SliceImage = "🍰".image()
-        let cupcake2Image = "🧁".image()
-        
-        let birthdayView = UIImageView(image: birthdayImage)
-        birthdayView.frame = CGRect(x: 110, y: 110, width: 40, height: 40)
-        imageContainer.addSubview(birthdayView)
-        
-        let cakeView = UIImageView(image: cakeImage)
-        cakeView.frame =  CGRect(x: 80, y: 80, width: 50, height: 50)
-        view.addSubview(cakeView)
-        
-        let cakeSliceView = UIImageView(image: cakeSliceImage)
-        cakeSliceView.frame = CGRect(x: 150, y: 80, width: 50, height: 50)
-        view.addSubview(cakeSliceView)
-        
-        let cupcakeView = UIImageView(image: cupcakeImage)
-        cupcakeView.frame = CGRect(x: 340, y: 80, width: 50, height: 50)
-        view.addSubview(cupcakeView)
-        
-        let cake2View = UIImageView(image: cake2Image)
-        cake2View.frame =  CGRect(x: 20, y: 80, width: 50, height: 50)
-        view.addSubview(cake2View)
-        
-        let cakeSlice2View = UIImageView(image: cake2SliceImage)
-        cakeSlice2View.frame = CGRect(x: 180, y: 80, width: 50, height: 50)
-        view.addSubview(cakeSlice2View)
-        
-        let cupcake2View = UIImageView(image: cupcake2Image)
-        cupcake2View.frame = CGRect(x: 290, y: 80, width: 50, height: 50)
-        view.addSubview(cupcake2View)
-        
-        animateEmojis(emojiView: cakeView, delay: 0.0)
-        animateEmojis(emojiView: cakeSliceView, delay: 2.0)
-        animateEmojis(emojiView: cupcakeView, delay: 1.0)
-        animateEmojis(emojiView: cake2View, delay: 4.0)
-        animateEmojis(emojiView: cakeSlice2View, delay: 0.5)
-        animateEmojis(emojiView: cupcake2View, delay: 5)
+
+        createEmojis()
         
         // Fetching deletedUsers from UserDefaults
         if let items = defaults.array(forKey: "deletedUsers") as? [String] {
@@ -83,19 +42,6 @@ class UserDetailsViewController: UIViewController {
         
         loadUsersAndUI()
 
-    }
-    
-    func animateEmojis(emojiView: UIView, delay: Double) {
-        UIView.animateKeyframes(withDuration: 6.5, delay: delay, options: [.repeat, .calculationModeLinear], animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 4/6.5) {
-                emojiView.frame.origin.y = self.view.frame.height - 200
-            }
-            UIView.addKeyframe(withRelativeStartTime: 4/6.5, relativeDuration: 2.5/6.5) {
-                emojiView.frame.origin.y = self.view.frame.height
-                emojiView.frame.size.width -= 49
-                emojiView.frame.size.height -= 49
-            }
-        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,6 +127,71 @@ extension UserDetailsViewController {
         } catch {
             print("Error saving context: \(error)")
         }
+    }
+}
+
+//MARK: - Animations
+extension UserDetailsViewController {
+    func createEmojis() {
+        // Creating emojis and converting to images,
+        // using extension of String
+        let birthdayImage = "🎉".image()
+        let cakeImage = "🎂".image()
+        let cakeSliceImage = "🍰".image()
+        let cupcakeImage = "🧁".image()
+        let cake2Image = "🎂".image()
+        let cake2SliceImage = "🍰".image()
+        let cupcake2Image = "🧁".image()
+        
+        // Placing images into View
+        let birthdayView = UIImageView(image: birthdayImage)
+        birthdayView.frame = CGRect(x: 110, y: 110, width: 40, height: 40)
+        imageContainer.addSubview(birthdayView)
+        
+        let cakeView = UIImageView(image: cakeImage)
+        cakeView.frame =  CGRect(x: 80, y: 80, width: 50, height: 50)
+        view.addSubview(cakeView)
+        
+        let cakeSliceView = UIImageView(image: cakeSliceImage)
+        cakeSliceView.frame = CGRect(x: 150, y: 80, width: 50, height: 50)
+        view.addSubview(cakeSliceView)
+        
+        let cupcakeView = UIImageView(image: cupcakeImage)
+        cupcakeView.frame = CGRect(x: 340, y: 80, width: 50, height: 50)
+        view.addSubview(cupcakeView)
+        
+        let cake2View = UIImageView(image: cake2Image)
+        cake2View.frame =  CGRect(x: 20, y: 80, width: 50, height: 50)
+        view.addSubview(cake2View)
+        
+        let cakeSlice2View = UIImageView(image: cake2SliceImage)
+        cakeSlice2View.frame = CGRect(x: 180, y: 80, width: 50, height: 50)
+        view.addSubview(cakeSlice2View)
+        
+        let cupcake2View = UIImageView(image: cupcake2Image)
+        cupcake2View.frame = CGRect(x: 290, y: 80, width: 50, height: 50)
+        view.addSubview(cupcake2View)
+        
+        // Dealing with animations
+        animateEmojis(emojiView: cakeView, delay: 0.0)
+        animateEmojis(emojiView: cakeSliceView, delay: 2.0)
+        animateEmojis(emojiView: cupcakeView, delay: 1.0)
+        animateEmojis(emojiView: cake2View, delay: 4.0)
+        animateEmojis(emojiView: cakeSlice2View, delay: 0.5)
+        animateEmojis(emojiView: cupcake2View, delay: 5)
+    }
+    
+    func animateEmojis(emojiView: UIView, delay: Double) {
+        UIView.animateKeyframes(withDuration: 6.5, delay: delay, options: [.repeat, .calculationModeLinear], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 4/6.5) {
+                emojiView.frame.origin.y = self.view.frame.height - 200
+            }
+            UIView.addKeyframe(withRelativeStartTime: 4/6.5, relativeDuration: 2.5/6.5) {
+                emojiView.frame.origin.y = self.view.frame.height
+                emojiView.frame.size.width -= 49
+                emojiView.frame.size.height -= 49
+            }
+        })
     }
 }
 
