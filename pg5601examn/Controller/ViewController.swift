@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let defaults = UserDefaults.standard
+    
+    let coredataManager = CoreDataManager()
 
     @IBOutlet weak var userTableView: UITableView!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
@@ -61,29 +63,10 @@ class ViewController: UIViewController {
 //MARK: - Launch && CoreData
 extension ViewController {
     func launchApplication() {
-        loadUsersFromDB()
+        userEntityFetched = coredataManager.loadUsersFromDB(context: context)
         users = userConverter.convertAllToUserModel(from: userEntityFetched)
         print(userEntityFetched.count)
         userTableView.reloadData()
-    }
-    
-    // Saving users to CoreData
-    func saveUsersToDB() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
-    }
-    
-    // Loading users from CoreData
-    func loadUsersFromDB() {
-        let request: NSFetchRequest<UserEntity> = UserEntity.fetchRequest()
-        do {
-            userEntityFetched = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context: \(error)")
-        }
     }
 }
 
@@ -93,7 +76,7 @@ extension  ViewController: UserManagerDelegate {
     func didUpdateUserList(_ userManager: UserManager, userData: [UserEntity]) {
         DispatchQueue.main.async {
             self.userEntityArray = userData
-            self.saveUsersToDB()
+            self.coredataManager.saveUsersToDB(context: self.context)
             self.launchApplication()
             self.loadingSpinner.stopAnimating()
             self.defaults.set(true, forKey: "First Launch")
