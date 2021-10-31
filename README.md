@@ -18,7 +18,7 @@ Kartet viser alle 100 personene med bilde og navn. Her er det mulig å trykke p�
 I denne delen av oppgaven fikk jeg dessverre ikke til å kun vise profilbilde og navn, men måtte se meg slått av den urørlige pin'en.
 
 ### Innstillinger
-Her kan brukeren endre seed og som vil importere 100 nye brukere fra API-et. Dersom en bruker er slettet fra kallet tidligere vil den ikke dukke opp igjen når du laster inn seed-en. Om du har endret en bruker fra en annen seed vil den forbli i lista og i tillegg til de nye brukerne.
+Her kan brukeren endre seed og som vil importere 100 nye brukere fra API-et. Dersom en bruker er slettet fra kallet tidligere vil den ikke dukke opp igjen når du laster inn seed-en. Om du har endret en bruker fra en annen seed vil den forbli i lista og i tillegg til de nye brukerne. "ios" er satt som default seed.
 
 ## CoreData og UserDefaults
 I oppgaven bruker jeg både CoreData og UserDefaults. Første gang brukeren åpner applikasjonen vil data fra API-et lastes inn i CoreData. På denne måten trenger brukeren kun internett første gang han åpner appen, og eventuelt hvis han vil laste inn ny seed.
@@ -27,10 +27,17 @@ UserDefaults har jeg brukt til mindre komplekse verdier, som for å sjekke om de
 ## Error-Handling
 Dersom brukeren forsøker å gjøre et API-kall uten å ha tilgang til internett vil det bli gitt en Alert til brukeren med et alternativ til å prøve å laste dataen på ny.
 
+### Tester
+Jeg har lagd to beskjedne tester som sjekker logikken for om brukeren har bursdag innen 7 dager eller ikke.
 
-### Used for loading images
+## Inspirasjon og Kilder
+Gjennom prosjektet har jeg brukt Google flittig. Jeg har hentet mye inspirasjon fra Udemy-kurset til Angela Yu og forelesnings-materialet.
+
+For å laste inn bilder til API-et brukte jeg denne lenka:
 https://www.hackingwithswift.com/example-code/uikit/how-to-load-a-remote-image-url-into-uiimageview 
 
+Extension til string for å gjøre emojis til UIImage:
+https://stackoverflow.com/questions/38809425/convert-apple-emoji-string-to-uiimage
 
-### Date Picker
+DatePicker:
 https://www.youtube.com/watch?v=fnq4wEDeQqA
