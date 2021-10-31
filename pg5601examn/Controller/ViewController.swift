@@ -59,7 +59,6 @@ extension ViewController {
     func launchApplication() {
         userEntityFetched = coredataManager.loadUsersFromDB(context: context)
         users = userConverter.convertAllToUserModel(from: userEntityFetched)
-        print(userEntityFetched.count)
         userTableView.reloadData()
     }
 }
